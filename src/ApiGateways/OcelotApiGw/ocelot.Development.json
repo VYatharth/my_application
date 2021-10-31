@@ -82,31 +82,31 @@
         "Limit": 1
       }
     },
-    //Discount API
-    {
-      "DownstreamPathTemplate": "/api/v1/Discount/{productName}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "discount.api",
-          "Port": "80"
-        }
-      ],
-      "UpstreamPathTemplate": "/Discount/{productName}",
-      "UpstreamHttpMethod": [ "GET", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/v1/Discount",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "discount.api",
-          "Port": "80"
-        }
-      ],
-      "UpstreamPathTemplate": "/Discount",
-      "UpstreamHttpMethod": [ "PUT", "POST" ]
-    },
+    ////Discount API
+    //{
+    //  "DownstreamPathTemplate": "/api/v1/Discount/{productName}",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "discount.api",
+    //      "Port": "80"
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/Discount/{productName}",
+    //  "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    //},
+    //{
+    //  "DownstreamPathTemplate": "/api/v1/Discount",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "discount.api",
+    //      "Port": "80"
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/Discount",
+    //  "UpstreamHttpMethod": [ "PUT", "POST" ]
+    //},
     //Order API
     {
       "DownstreamPathTemplate": "/api/v1/Order/{userName}",
