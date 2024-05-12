@@ -1,7 +1,35 @@
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: networking-managed-cert
+spec:
+  domains:
+    - DOMAIN_NAME
+    - www.DOMAIN_NAME
+---
+
+
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: networking-fc
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
+---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: my-ingress
+  name: my-app-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "global-ingress"
+    networking.gke.io/managed-certificates: networking-managed-cert
+    networking.gke.io/v1beta1.FrontendConfig: networking-fc
+    kubernetes.io/ingress.class: gce
 spec:
   rules:
   - http:
@@ -10,13 +38,13 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: my-products
+            name: my-app-fe
             port:
               number: 60000
-      - path: /discounted
+      - path: /api
         pathType: ImplementationSpecific
         backend:
           service:
-            name: my-discounted-products
+            name: my-app-be
             port:
               number: 80
