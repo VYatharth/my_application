@@ -1,4 +1,10 @@
 
+#set region and zone
+gcloud config set compute/region europe-west1
+gcloud config set compute/zone ZONE
+
+
+
 # Create custom mode VPC 
 # Not sure it should be private or public
 gcloud compute networks create privatenet --subnet-mode=custom
@@ -59,9 +65,14 @@ gcloud beta container clusters create private-cluster2 \
     # If you receive an error that no preemptible instances are available, you can remove the --preemptible option to proceed
 gcloud container node-pools create "temp-pool-1" \
     --cluster=$my_cluster --zone=$my_zone \
+    --machine-type "e2-standard-4" \
     --num-nodes "2" --node-labels=temp=true --preemptible
+    
 
 # Enable master authorized network
 gcloud container clusters update private-cluster \
     --enable-master-authorized-networks \
     --master-authorized-networks [MY_EXTERNAL_RANGE]
+
+# TO connect to cluster from cloud shell
+gcloud container clusters get-credentials private-cluster2
