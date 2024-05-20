@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-fe-deployment
+  labels:
+    name: my-app-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app-fe
+  template:
+    metadata:
+      labels:
+        app: my-app-fe
+    spec:
+      containers:
+      - image: vyathartha/my-app-fe:latest
+        name: my-app-fe-container
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        resources: # The resource requests and limits for the container
+          requests:
+            cpu: "250m"
+            memory: "190Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

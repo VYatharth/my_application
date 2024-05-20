@@ -16,6 +16,8 @@ def generate_download_signed_url_v4(bucket_name, blob_name):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
+    bl = bucket.list_blobs()
+    print(list(bl))
     blob = bucket.blob(blob_name)
 
     url = blob.generate_signed_url(
@@ -29,3 +31,5 @@ def generate_download_signed_url_v4(bucket_name, blob_name):
     print("Generated GET signed URL:")
     print(url)
     return url
+
+generate_download_signed_url_v4('signed-url-test2', 'test-folder/flower.jpg')

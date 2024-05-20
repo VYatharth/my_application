@@ -67,7 +67,9 @@ gcloud container node-pools create "temp-pool-1" \
     --cluster=$my_cluster --zone=$my_zone \
     --machine-type "e2-standard-4" \
     --num-nodes "2" --node-labels=temp=true --preemptible
-    
+#  list only the nodes with the temp=true label
+kubectl get nodes -l temp=true
+
 
 # Enable master authorized network
 gcloud container clusters update private-cluster \

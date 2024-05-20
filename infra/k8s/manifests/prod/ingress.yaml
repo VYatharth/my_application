@@ -38,13 +38,13 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: my-app-fe
+            name: my-app-fe-service
             port:
-              number: 60000
+              number: 80
       - path: /api
         pathType: ImplementationSpecific
         backend:
           service:
-            name: my-app-be
+            name: my-app-be-service
             port:
-              number: 80
+              number: 8080

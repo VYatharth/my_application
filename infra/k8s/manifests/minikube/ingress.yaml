@@ -1,0 +1,32 @@
+# Refer this doc for setup and access - https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+         rewrite ^/api(/|$)(.*) /$2 break;
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hello-world.example
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app-be-service
+                port:
+                  number: 8081
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app-fe-service
+                port:
+                  number: 8082
+          
+        
