@@ -61,17 +61,17 @@ ingress:
     # networking.gke.io/managed-certificates: networking-managed-cert
     # networking.gke.io/v1beta1.FrontendConfig: networking-fc
     kubernetes.io/ingress.class: gce
-  includeDefaultBackend: true
+  includeDefaultBackend: false
   rules:
     - http:
         paths:
-          - path: /*
+          - path: /api/*
             pathType: ImplementationSpecific
             backend:
               service:
                 name: "{{ .Values.beService.name }}"
                 port: "{{ .Values.beService.port }}"
-          - path: /api/*
+          - path: /*
             pathType: ImplementationSpecific
             backend:
               service:
