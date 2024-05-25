@@ -63,8 +63,7 @@ ingress:
     kubernetes.io/ingress.class: gce
   includeDefaultBackend: true
   rules:
-    - host: hello-world.example
-      http:
+    - http:
         paths:
           - path: /*
             pathType: ImplementationSpecific
