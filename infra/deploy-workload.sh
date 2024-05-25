@@ -15,6 +15,9 @@ kubectl apply -f ../manifests/ingress.yaml
 
 
 # ---------------- USING HELM ------------------------------------------
+git clone https://github.com/VYatharth/my_application.git
+cd my_application/infra/k8s/helm
+git switch -c develop origin/develop
 
 # Install helm - https://helm.sh/docs/intro/install/ 
 
@@ -23,7 +26,7 @@ kubectl apply -f ../manifests/ingress.yaml
     # might need more steps to pull from my repository https://docs.google.com/document/d/1dyYB0SRvaKGH2FGy_zVteEeXq3CDweth-4WqwOqOoC4/edit#heading=h.mcxdgjajqcou
 
 # Install a package/chart
-    helm upgrade --install --namespace ns2 mydb bitnami/mysql --values ./values.yaml
+    helm upgrade --install --namespace ns2 my-app-release ./helm --values ./helm/values.yaml
 
 
 
