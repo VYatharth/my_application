@@ -19,11 +19,11 @@ feDeployment:
     repository: vyathartha/my-app-fe
   resources: # The resource requests and limits for the container
     requests:
-      cpu: "250m"
-      memory: "200Mi"
+      cpu: "100m"
+      memory: "150Mi"
     limits:
-      cpu: "500m"
-      memory: "500Mi"
+      cpu: "200m"
+      memory: "400Mi"
 
 feService:
   name: my-app-fe-service
@@ -42,10 +42,10 @@ beDeployment:
     repository: vyathartha/user-app
   resources: # The resource requests and limits for the container
     requests:
-      cpu: "250m"
+      cpu: "100m"
       memory: "150Mi"
     limits:
-      cpu: "400m"
+      cpu: "200m"
       memory: "400Mi"
 
 beService:
