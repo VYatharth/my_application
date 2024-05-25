@@ -4,6 +4,10 @@ metadata:
   name: {{ .Values.feService.name }}
   labels:
     service: my-app-fe-service
+  {{- with .Values.feService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type:  {{ .Values.feService.type }}
   selector:

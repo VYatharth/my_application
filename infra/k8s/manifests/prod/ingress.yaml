@@ -26,7 +26,7 @@ kind: Ingress
 metadata:
   name: my-app-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "global-ingress"
+    kubernetes.io/ingress.global-static-ip-name: "global-ingress-ip"
     networking.gke.io/managed-certificates: networking-managed-cert
     networking.gke.io/v1beta1.FrontendConfig: networking-fc
     kubernetes.io/ingress.class: gce
@@ -41,7 +41,7 @@ spec:
             name: my-app-fe-service
             port:
               number: 80
-      - path: /api
+      - path: /api/*
         pathType: ImplementationSpecific
         backend:
           service:

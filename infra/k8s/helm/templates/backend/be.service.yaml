@@ -2,6 +2,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.beService.name}}
+  {{- with .Values.beService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.beService.type }}
   selector:

@@ -8,7 +8,16 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if .Values.ingress.includeDefaultBackend }}
+  defaultBackend: 
+    service:
+      name: {{ .Values.feService.name }}
+      port: 
+        number: {{ .Values.feService.port }}
+  {{- end }}
+  {{- if .Values.ingress.ingressClassName }}
   ingressClassName: {{ .Values.ingress.ingressClassName }}
+  {{- end }}
   rules:
     {{- range .Values.ingress.rules }}
     - host: {{ .host | quote }}
@@ -21,6 +30,6 @@ spec:
               service:
                 name: {{ tpl .backend.service.name $ }}
                 port: 
-                  number: {{ .backend.service.port }}
+                  number: {{ tpl .backend.service.port $ }}
           {{- end }}
     {{- end }}
