@@ -10,7 +10,7 @@ deploymentCommon:
   nodeSelector: {}
 
 feDeployment:
-  replicas: 1
+  replicas: 2
   labels:
     app: my-app-fe
   ports:
@@ -33,7 +33,7 @@ feService:
   port: 8081
 
 beDeployment:
-  replicas: 1
+  replicas: 2
   labels:
     app: my-app-be
   ports:
