@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-be-deployment
+  labels:
+    name: my-app-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app-be
+  template:
+    metadata:
+      labels:
+        app: my-app-be
+    spec:
+      containers:
+      - image: vyathartha/user-app:latest
+        name: my-app-be-container
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        resources: # The resource requests and limits for the container
+          requests:
+            cpu: "250m"
+            memory: "190Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-be-deployment
+  labels:
+    name: my-app-be
+spec:
+  replicas: {{ .Values.beDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.beDeployment.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.beDeployment.labels.app }}
+    spec:
+      containers:
+        - name: my-app-be-container
+          image: "{{ .Values.beDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+          imagePullPolicy: {{ .Values.deploymentCommon.image.pullPolicy }}
+          ports:
+            {{ with index .Values.beDeployment.ports 0 }}
+            - containerPort: {{  .containerPort }}
+            {{ end }}
+          resources:
+            requests:
+              cpu: {{ .Values.beDeployment.resources.requests.cpu }}
+              memory: {{ .Values.beDeployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.beDeployment.resources.limits.cpu }}
+              memory: {{ .Values.beDeployment.resources.limits.memory }}
+      dnsPolicy: {{ .Values.deploymentCommon.dnsPolicy }}
+      restartPolicy: {{ .Values.deploymentCommon.restartPolicy }}

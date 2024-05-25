@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-fe-deployment
+  labels:
+    name: my-app-fe
+spec:
+  replicas: {{ .Values.feDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.feDeployment.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.feDeployment.labels.app }}
+    spec:
+      containers:
+        - image: "{{ .Values.feDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+          name: my-app-fe-container
+          imagePullPolicy: {{ .Values.deploymentCommon.image.pullPolicy }}
+          ports:
+            {{ with index .Values.feDeployment.ports 0 }}
+            - containerPort: {{  .containerPort }}
+            {{ end }}
+          resources:
+            requests:
+              cpu: {{ .Values.feDeployment.resources.requests.cpu }}
+              memory: {{ .Values.feDeployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.feDeployment.resources.limits.cpu }}
+              memory: {{ .Values.feDeployment.resources.limits.memory }}
+      dnsPolicy: {{ .Values.deploymentCommon.dnsPolicy }}
+      restartPolicy: {{ .Values.deploymentCommon.restartPolicy }}

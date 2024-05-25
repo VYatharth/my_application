@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-be-service
+  annotations:
+    cloud.google.com/backend-config: '{"default": "my-backendconfig"}'
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  type: ClusterIP
+  # Uncomment the below line to create a Headless Service
+  # clusterIP: None
+  selector:
+    app: fastapi-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+
+# The manifest includes an annotations field where the annotation for cloud.google.com/neg will 
+# enable container-native load balancing on for your application when an ingress is created.

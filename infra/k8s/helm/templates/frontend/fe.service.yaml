@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.feService.name }}
+  labels:
+    service: my-app-fe-service
+  {{- with .Values.feService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type:  {{ .Values.feService.type }}
+  selector:
+    app: {{ .Values.feDeployment.labels.app }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.feService.port }}
+      {{ with index .Values.feDeployment.ports 0 }}
+      targetPort: {{ .containerPort }}
+      {{ end }}
