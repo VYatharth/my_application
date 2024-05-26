@@ -42,11 +42,11 @@ beDeployment:
     repository: vyathartha/user-app
   resources: # The resource requests and limits for the container
     requests:
-      cpu: "200m"
-      memory: "250Mi"
+      cpu: "100m"
+      memory: "150Mi"
     limits:
-      cpu: "250m"
-      memory: "350Mi"
+      cpu: "150m"
+      memory: "250Mi"
 
 beService:
   name: my-app-be-service
