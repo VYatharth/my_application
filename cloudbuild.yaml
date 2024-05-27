@@ -1,0 +1,36 @@
+
+steps:
+  # build container images be
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 
+            'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', '.']
+
+   # Docker push to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
+
+   # build container images fe
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 
+            'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', '.']
+
+   # Docker push to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
+
+    # package helm chart
+  - name: 'gcr.io/$PROJECT_ID/helm:latest'
+    args: ['package', './infra/k8s/helm', '--destination', './package', '--set', 'image.tag=${SHORT_SHA}', '--version', '${SHORT_SHA}']
+
+  # push helm chart to repo
+  - name: 'gcr.io/$PROJECT_ID/helm:latest'
+    args: ['push', './package/my-app-${SHORT_SHA}.tgz', 'oci://us-central1-docker.pkg.dev/${PROJECT_ID}/quickstart-helm-repo']
+
+# Store images in Google Artifact Registry 
+images:
+  - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}
+
+
+# Deploy pipeline (Do manually for now)
+    # install helm
+    # install/upgrade helm chart

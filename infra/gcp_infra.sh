@@ -9,7 +9,6 @@ gcloud config set compute/region $MY_REGION
 gcloud config set compute/zone $MY_ZONE
 
 
-
 # Create custom mode VPC 
 # Not sure it should be private or public
 gcloud compute networks create my-app-network --subnet-mode=custom
@@ -89,32 +88,82 @@ kubectl get nodes -l temp=true
     # configure authorized network and then run
     gcloud container clusters get-credentials my-app-cluster
 
-
     kubectl scale deployment --replicas=0 kube-dns-autoscaler --namespace=kube-system
     kubectl scale deployment --replicas=0 kube-dns --namespace=kube-system
 
 
 
+# CI/CD
+    # enable the APIs
+    gcloud services enable container.googleapis.com \
+    cloudbuild.googleapis.com \
+    sourcerepo.googleapis.com \
+    artifactregistry.googleapis.com
+
+    # Create helm repo 
+        helm version
+
+        gcloud artifacts repositories create my-app-helm-repo --repository-format=docker \
+            --location=$MY_REGION --description="Helm repository"
+
+
+    # create docker repo - https://cloud.google.com/artifact-registry/docs/helm/store-helm-charts
+        gcloud artifacts repositories create my-app-be-docker-repo --repository-format=docker \
+        --location=$MY_REGION --description="Docker repository" \
+        --project=PROJECT
+
+         gcloud artifacts repositories create my-app-fe-docker-repo --repository-format=docker \
+        --location=$MY_REGION --description="Docker repository" \
+        --project=PROJECT
+
+        gcloud artifacts repositories list
+    
+    # Create cloud build
+
+        # connect to github repo - Follow the instructions here -https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github#connecting_a_github_host)
+        gcloud builds connections create github my-app-connection --region=$MY_REGION
+
+            # add a GitHub repository to your connection - https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#connecting_a_github_repository_2 
+            gcloud builds repositories create REPO_NAME \
+            --remote-uri=REPO_URI \
+            --connection=CONNECTION_NAME --region=REGION
+
+        # create trigger for github repo - https://cloud.google.com/build/docs/automating-builds/github/build-repos-from-github?generation=2nd-gen
+        gcloud builds triggers create github \
+        --name=TRIGGER_NAME \
+        --repository=projects/PROJECT_ID/locations/REGION/connections/CONNECTION_NAME/repositories/REPO_NAME \
+        --branch-pattern=BRANCH_PATTERN # or --tag-pattern=TAG_PATTERN \
+        --build-config=BUILD_CONFIG_FILE \
+        --region=REGION
+        
+
+    # Grant appropriate role to the cloud build service account
+        # Grant the registry writer role to the Cloud Build service account: 
+        gcloud artifacts repositories add-iam-policy-binding my-repo \
+            --location=us-central1 --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+            --role=roles/artifactregistry.writer
+     
 
 
 
 
-# create a custom security role to access cloud storage
+# # create a custom security role to access cloud storage
 
-    # role config - put it in a yaml file
-    title: "orca_storage_editor_196"
-    description: "orca_storage_editor_196"
-    stage: "ALPHA"
-    includedPermissions:
-    - storage.buckets.get      
-    - storage.objects.get
-    - storage.objects.list
-    - storage.objects.update
-    - storage.objects.create
+#     # role config - put it in a yaml file
+#     title: "orca_storage_editor_196"
+#     description: "orca_storage_editor_196"
+#     stage: "ALPHA"
+#     includedPermissions:
+#     - storage.buckets.get      
+#     - storage.objects.get
+#     - storage.objects.list
+#     - storage.objects.update
+#     - storage.objects.create
 
-    gcloud iam roles create orca_storage_editor_196 --project qwiklabs-gcp-00-8051f9ee03bc --file role-definition.yaml
+#     gcloud iam roles create orca_storage_editor_196 --project qwiklabs-gcp-00-8051f9ee03bc --file role-definition.yaml
 
-# Create service account to allow GKE to access cloud storage
-gcloud iam service-accounts create orca-private-cluster-408-sa --display-name "my service account"
-# Bind the custom security role to service account
-gcloud projects add-iam-policy-binding qwiklabs-gcp-00-8051f9ee03bc --member serviceAccount:orca-private-cluster-408-sa@qwiklabs-gcp-00-8051f9ee03bc.iam.gserviceaccount.com --role projects/qwiklabs-gcp-00-8051f9ee03bc/roles/orca_storage_editor_196
+# # Create service account to allow GKE to access cloud storage
+# gcloud iam service-accounts create orca-private-cluster-408-sa --display-name "my service account"
+# # Bind the custom security role to service account
+# gcloud projects add-iam-policy-binding qwiklabs-gcp-00-8051f9ee03bc --member serviceAccount:orca-private-cluster-408-sa@qwiklabs-gcp-00-8051f9ee03bc.iam.gserviceaccount.com --role projects/qwiklabs-gcp-00-8051f9ee03bc/roles/orca_storage_editor_196
+
