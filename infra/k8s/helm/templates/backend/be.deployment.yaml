@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: my-app-be-container
-          image: "{{ .Values.beDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+          # image: "{{ .Values.beDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+          image: "{{ .Values.beDeployment.image.repository}}"
           imagePullPolicy: {{ .Values.deploymentCommon.image.pullPolicy }}
           ports:
             {{ with index .Values.beDeployment.ports 0 }}

@@ -15,7 +15,8 @@ spec:
         app: {{ .Values.feDeployment.labels.app }}
     spec:
       containers:
-        - image: "{{ .Values.feDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+        # - image: "{{ .Values.feDeployment.image.repository}}:{{ .Values.deploymentCommon.image.tag }}"
+        - image: "{{ .Values.feDeployment.image.repository}}"
           name: my-app-fe-container
           imagePullPolicy: {{ .Values.deploymentCommon.image.pullPolicy }}
           ports:

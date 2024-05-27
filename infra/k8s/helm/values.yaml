@@ -5,7 +5,7 @@ deploymentCommon:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
   image:
-    tag: latest
+    tag: IMAGE_TAG
     pullPolicy: Always
   nodeSelector: {}
 
@@ -16,7 +16,7 @@ feDeployment:
   ports:
     - containerPort: 80
   image:
-    repository: vyathartha/my-app-fe
+    repository: GOOGLE_CLOUD_FE_REPO
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
@@ -39,7 +39,7 @@ beDeployment:
   ports:
     - containerPort: 8080
   image:
-    repository: vyathartha/user-app
+    repository: GOOGLE_CLOUD_BE_REPO
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
