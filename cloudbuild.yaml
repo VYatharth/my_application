@@ -19,12 +19,12 @@ steps:
   #   args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
 
     # package helm chart
-  - name: 'gcr.io/$PROJECT_ID/helm'
+  - name: 'alpine/helm'
     args: ['package', './infra/k8s/helm', '--destination', './package', '--set', 'image.tag=${SHORT_SHA}', '--version', '${SHORT_SHA}']
     env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   # push helm chart to repo
-  - name: 'gcr.io/$PROJECT_ID/helm'
+  - name: 'alpine/helm'
     args: ['push', './package/my-app-${SHORT_SHA}.tgz', 'oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo']
     env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
