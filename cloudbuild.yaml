@@ -25,8 +25,8 @@ steps:
     args:
     - '-c'
     - |
-      sed "s/GOOGLE_CLOUD_FE_REPO/${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-fe:${SHORT_SHA}/g" infra/k8s/helm/values.yaml | \
-      sed "s/GOOGLE_CLOUD_BE_REPO/${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-be:${SHORT_SHA}/g" infra/k8s/helm/values.yaml 
+      sed "s/GOOGLE_CLOUD_FE_REPO/${_LOCATION}-docker.pkg.dev\/${PROJECT_ID}\/my-app-fe-docker-repo\/my-app-fe:${SHORT_SHA}/g" infra/k8s/helm/values.yaml | \
+      sed "s/GOOGLE_CLOUD_BE_REPO/${_LOCATION}-docker.pkg.dev\/${PROJECT_ID}\/my-app-fe-docker-repo\/my-app-be:${SHORT_SHA}/g" infra/k8s/helm/values.yaml 
 
   - name: 'alpine/helm'
     args: ['package', './infra/k8s/helm', '--destination', './package', '--version', '${SHORT_SHA}']
