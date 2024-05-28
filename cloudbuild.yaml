@@ -20,34 +20,24 @@ steps:
 
     # package helm chart
   - name: 'gcr.io/cloud-builders/gcloud'
-    id: Generate manifest
+    id: Update values
     entrypoint: /bin/sh
     args:
     - '-c'
     - |
       sed -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${SHORT_SHA}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   id: Generate manifest
-  #   entrypoint: /bin/sh
-  #   args:
-  #   - '-c'
-  #   - |
-  #     sed "s/PROJECT_ID/${PROJECT_ID}/g" infra/k8s/helm/values.yaml | \
-  #     sed "s/IMAGE_TAG/${SHORT_SHA}/g" infra/k8s/helm/values.yaml | \
-  #     sed "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
+  
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Push chart
+    entrypoint: /bin/sh
+    args:
+    - '-c'
+    - |
+      helm repo list && \
+      helm package ./infra/k8s/helm --destination ./package --version ${SHORT_SHA} && \
+      gcloud auth configure-docker ${_LOCATION}-docker.pkg.dev && \
+      helm push ./package/my-app-${SHORT_SHA}.tgz oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo
 
-  - name: 'alpine/helm:3.11.2'
-    args: ['list']
-  - name: 'alpine/helm:latest'
-  # - name: 'gcr.io/$PROJECT_ID/cloud-builders-helm'
-    args: ['package', './infra/k8s/helm', '--destination', './package', '--version', '${SHORT_SHA}']
-    env:
-    - 'CLOUDSDK_COMPUTE_ZONE=${_LOCATION}'
-  # push helm chart to repo
-  - name: 'alpine/helm:latest'
-    args: ['push', './package/my-app-${SHORT_SHA}.tgz', 'oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo']
-    env:
-    - 'CLOUDSDK_COMPUTE_ZONE=${_LOCATION}'
 substitutions:
   _LOCATION: us-east4 # us-east1
 # Store images in Google Artifact Registry 
