@@ -3,20 +3,20 @@ steps:
   # build container images be
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${SHORT_SHA}', './be']
+            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}', './be']
 
   #  # Docker push to Google Artifact Registry
   # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push',  '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${SHORT_SHA}']
+  #   args: ['push',  '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}']
 
    # build container images fe
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-fe:${SHORT_SHA}', './frontend']
+            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-fe:${_VERSION}', './frontend']
 
   #  # Docker push to Google Artifact Registry
   # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
+  #   args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${_VERSION}']
 
     # package helm chart
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -25,7 +25,7 @@ steps:
     args:
     - '-c'
     - |
-      sed -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${SHORT_SHA}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
+      sed -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${_VERSION}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
   
   - name: 'gcr.io/cloud-builders/gcloud'
     id: Push chart
@@ -36,16 +36,17 @@ steps:
       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
       chmod 700 get_helm.sh && \
       ./get_helm.sh && \
-      helm package ./infra/k8s/helm --destination ./package --version ${SHORT_SHA} && \
+      helm package ./infra/k8s/helm --destination ./package --version ${_VERSION} && \
       gcloud auth configure-docker ${_LOCATION}-docker.pkg.dev && \
-      helm push ./package/my-app-${SHORT_SHA}.tgz oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo
+      helm push ./package/my-app-${_VERSION}.tgz oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo
 
 substitutions:
-  _LOCATION: us-east4 # us-east1
+  _LOCATION: us-central1 
+  _VERSION: 0.1.0 
 # Store images in Google Artifact Registry 
 images:
-  - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${SHORT_SHA}
-  - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-fe:${SHORT_SHA}
+  - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}
+  - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-fe-docker-repo/my-app-fe:${_VERSION}
 
 
 # Deploy pipeline (Do manually for now)
