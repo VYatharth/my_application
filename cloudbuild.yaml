@@ -36,7 +36,6 @@ steps:
       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
       chmod 700 get_helm.sh && \
       ./get_helm.sh && \
-      helm repo list && \
       helm package ./infra/k8s/helm --destination ./package --version ${SHORT_SHA} && \
       gcloud auth configure-docker ${_LOCATION}-docker.pkg.dev && \
       helm push ./package/my-app-${SHORT_SHA}.tgz oci://${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-helm-repo
