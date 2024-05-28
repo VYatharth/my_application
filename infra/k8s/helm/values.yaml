@@ -1,5 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
+gcpProjectId: "PROJECT_ID"
 
 deploymentCommon:
   dnsPolicy: ClusterFirst
@@ -16,7 +17,7 @@ feDeployment:
   ports:
     - containerPort: 80
   image:
-    repository: GOOGLE_CLOUD_FE_REPO
+    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-fe-docker-repo/my-app-fe
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
@@ -39,7 +40,7 @@ beDeployment:
   ports:
     - containerPort: 8080
   image:
-    repository: GOOGLE_CLOUD_BE_REPO
+    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-be-docker-repo/my-app-be
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
