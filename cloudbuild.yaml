@@ -25,10 +25,19 @@ steps:
     args:
     - '-c'
     - |
-      sed "s/GOOGLE_CLOUD_FE_REPO/${_LOCATION}-docker.pkg.dev\/${PROJECT_ID}\/my-app-fe-docker-repo\/my-app-fe:${SHORT_SHA}/g" infra/k8s/helm/values.yaml | \
-      sed "s/GOOGLE_CLOUD_BE_REPO/${_LOCATION}-docker.pkg.dev\/${PROJECT_ID}\/my-app-fe-docker-repo\/my-app-be:${SHORT_SHA}/g" infra/k8s/helm/values.yaml 
+      sed -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${SHORT_SHA}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   id: Generate manifest
+  #   entrypoint: /bin/sh
+  #   args:
+  #   - '-c'
+  #   - |
+  #     sed "s/PROJECT_ID/${PROJECT_ID}/g" infra/k8s/helm/values.yaml | \
+  #     sed "s/IMAGE_TAG/${SHORT_SHA}/g" infra/k8s/helm/values.yaml | \
+  #     sed "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
 
   - name: 'alpine/helm'
+  # - name: 'gcr.io/$PROJECT_ID/cloud-builders-helm'
     args: ['package', './infra/k8s/helm', '--destination', './package', '--version', '${SHORT_SHA}']
     env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
@@ -38,7 +47,7 @@ steps:
     env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
 substitutions:
-  _LOCATION: us-central1 # us-east1
+  _LOCATION: us-east4 # us-east1
 # Store images in Google Artifact Registry 
 images:
   - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${SHORT_SHA}
