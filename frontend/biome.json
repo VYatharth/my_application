@@ -24,8 +24,8 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
-      "semicolons": "asNeeded"
+      "quoteStyle": "single",
+      "semicolons": "always"
     }
   }
 }
