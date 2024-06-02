@@ -8,10 +8,35 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import useCustomToast from '../../../hooks/useCustomToast';
+import { UserService } from '../../../client';
+import { Suspense } from 'react';
+
+function Users() {
+  const { data: items } = useSuspenseQuery({
+    queryKey: ['items'],
+    queryFn: () => UserService.indexUsersGet(),
+  });
+
+  return (
+    <ol>
+      {items.map((item) => (
+        <li key={item.id}>
+          <span>{item.id}</span> -<span>{item.username}</span> -
+          <span color={!item.email ? 'ui.dim' : 'inherit'}>
+            {item.email || 'N/A'}
+          </span>
+          {/* <Td>
+            <ActionsMenu type={"Item"} value={item} />
+          </Td> */}
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 const AddBlog = () => {
   const {
@@ -33,20 +58,20 @@ const AddBlog = () => {
     return true;
   };
 
-  const mutation = useMutation({
-    mutationFn: savePost,
-    onSuccess: () => {
-      showToast('Success!', 'Password updated.', 'success');
-      reset();
-      navigate({ to: '/login' });
-    },
-    onError: (err) => {
-      showToast('Something went wrong.', 'error detail', 'error');
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: savePost,
+  //   onSuccess: () => {
+  //     showToast('Success!', 'Password updated.', 'success');
+  //     reset();
+  //     navigate({ to: '/' });
+  //   },
+  //   onError: (err) => {
+  //     showToast('Something went wrong.', 'error detail', 'error');
+  //   },
+  // });
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    mutation.mutate(data);
+    // mutation.mutate(data);
   };
   return (
     <Container
@@ -65,6 +90,9 @@ const AddBlog = () => {
       <Text textAlign="center">
         Please enter your new password and confirm it to reset your password.
       </Text>
+      <Suspense fallback={<Text>test</Text>}>
+        <Users />
+      </Suspense>
       <FormControl mt={4} isInvalid={!!errors.new_password}>
         <FormLabel htmlFor="password">Set Password</FormLabel>
         <Input id="password" placeholder="Password" type="password" />
@@ -79,6 +107,8 @@ const AddBlog = () => {
       <Button variant="primary" type="submit">
         Reset Password
       </Button>
+
+      
     </Container>
   );
 };

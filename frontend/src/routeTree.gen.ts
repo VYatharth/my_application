@@ -11,16 +11,11 @@
 // Import Routes
 
 import { Route as rootRoute } from './pages/~__root'
-import { Route as IndexImport } from './pages/~index'
 import { Route as PortfolioRouteImport } from './pages/~portfolio/~route'
 import { Route as AdminRouteImport } from './pages/~admin/~route'
+import { Route as IndexImport } from './pages/~index'
 
 // Create/Update Routes
-
-const IndexRoute = IndexImport.update({
-  path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const PortfolioRouteRoute = PortfolioRouteImport.update({
   path: '/portfolio',
@@ -32,10 +27,19 @@ const AdminRouteRoute = AdminRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IndexRoute = IndexImport.update({
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/admin': {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRoute
@@ -44,19 +48,15 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRoute
     }
-    '/': {
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
+  IndexRoute,
   AdminRouteRoute,
   PortfolioRouteRoute,
-  IndexRoute,
 ])
 
 /* prettier-ignore-end */
