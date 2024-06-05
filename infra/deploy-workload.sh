@@ -26,7 +26,7 @@ git switch -c develop origin/develop
     # might need more steps to pull from my repository https://docs.google.com/document/d/1dyYB0SRvaKGH2FGy_zVteEeXq3CDweth-4WqwOqOoC4/edit#heading=h.mcxdgjajqcou
 
 # Install a package/chart
-    helm upgrade --install --namespace ns2 my-app-release ./helm --values ./helm/values.yaml
+    helm upgrade --install --atomic --namespace ns2 my-app-release ./helm --values ./helm/values.yaml
 
 
 
