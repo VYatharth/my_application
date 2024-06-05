@@ -1,6 +1,6 @@
 # create environment variables in cloud shell
-export MY_REGION=us-central1 # us-east1
-export MY_ZONE=us-central1-c # us-east1-c
+export MY_REGION=us-central1
+export MY_ZONE=us-central1-c
 export MY_CLUSTER=my-app-cluster
 export MY_NETWORK=my-app-network
 export PROJECT_ID=$(gcloud config get-value project)
@@ -148,15 +148,15 @@ kubectl get nodes -l temp=true
     # Grant appropriate role to the cloud build service account
         # Grant the registry writer role to the Cloud Build service account: 
         gcloud artifacts repositories add-iam-policy-binding my-app-helm-repo \
-            --location=us-central1 --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
             --role=roles/artifactregistry.writer
 
         gcloud artifacts repositories add-iam-policy-binding my-app-be-docker-repo \
-            --location=us-central1 --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
             --role=roles/artifactregistry.writer
 
         gcloud artifacts repositories add-iam-policy-binding my-app-fe-docker-repo \
-            --location=us-central1 --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
             --role=roles/artifactregistry.writer
      
 
