@@ -30,6 +30,13 @@ gcloud artifacts repositories create quickstart-docker-repo --repository-format=
     --location=us-west2 --description="Docker repository"
 
 
+#Create static IP address
+gcloud compute addresses create my-app-public-ip --global
+    # to find the address run
+    gcloud compute addresses describe my-app-public-ip --global
+
+
+
 # create private cluster with custom subnet
 # gcloud beta container clusters create my-app-cluster \
 gcloud container clusters create my-app-cluster \
@@ -101,6 +108,20 @@ kubectl get nodes -l temp=true
     artifactregistry.googleapis.com \
     secretmanager.googleapis.com
 
+    # create cloud armor security policy
+    gcloud compute security-policies create my-app-armor-policy \
+    --description "policy for rate limiting" \
+    --type=CLOUD_ARMOR_EDGE \
+        # add rule to policy. Config setting details - https://cloud.google.com/armor/docs/rate-limiting-overview#throttle-traffic
+        gcloud compute security-policies rules create 100 \
+            --security-policy=my-app-armor-policy     \
+            --action=throttle                   \
+            --rate-limit-threshold-count=20           \
+            --rate-limit-threshold-interval-sec=10   \
+            --conform-action=allow           \
+            --exceed-action=deny-429         \
+            --enforce-on-key=IP
+    
     # Create helm repo 
         helm version
 
