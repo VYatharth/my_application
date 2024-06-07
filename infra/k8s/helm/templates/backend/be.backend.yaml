@@ -4,6 +4,8 @@ kind: BackendConfig
 metadata:
   name: my-app-backendconfig-be
 spec:
+  securityPolicy:
+    name:  {{ .Values.backendConfig.policyName }}
   healthCheck:
     checkIntervalSec: 60
     timeoutSec: 5
@@ -11,5 +13,5 @@ spec:
     unhealthyThreshold: 5
     port: {{ .Values.beDeployment.containerPort }}
     type: HTTP
-    requestPath: /api/health
+    requestPath: {{  .Values.beDeployment.probePath }}
 {{- end }}

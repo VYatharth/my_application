@@ -4,6 +4,8 @@ kind: BackendConfig
 metadata:
   name: my-app-backendconfig-fe
 spec:
+  securityPolicy:
+    name:  {{ .Values.backendConfig.policyName }}
   cdn:  
     enabled: true
     requestCoalescing: true
@@ -14,5 +16,5 @@ spec:
     unhealthyThreshold: 5
     port: {{ .Values.feDeployment.containerPort }}
     type: HTTP
-    requestPath: /health
+    requestPath: {{  .Values.feDeployment.probePath }}
 {{- end }}
