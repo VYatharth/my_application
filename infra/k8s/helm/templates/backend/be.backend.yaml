@@ -4,8 +4,6 @@ kind: BackendConfig
 metadata:
   name: my-app-backendconfig-be
 spec:
-  securityPolicy:
-    name:  {{ .Values.backendConfig.policyName | quote }}
   healthCheck:
     checkIntervalSec: 60
     timeoutSec: 5

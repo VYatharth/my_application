@@ -4,8 +4,6 @@ kind: BackendConfig
 metadata:
   name: my-app-backendconfig-fe
 spec:
-  securityPolicy:
-    name:  {{ .Values.backendConfig.policyName | quote }}
   cdn:  
     enabled: true
     requestCoalescing: true
