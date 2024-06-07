@@ -25,18 +25,6 @@ gcloud compute networks subnets create my-app-subnet \
     # gcloud compute firewall-rules create my-app-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=$MY_NETWORK --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
 
 
-# Create a Docker repository in Artifact Registry - https://cloud.google.com/build/docs/build-push-docker-image#create_a_docker_repository_in 
-gcloud artifacts repositories create quickstart-docker-repo --repository-format=docker \
-    --location=us-west2 --description="Docker repository"
-
-
-#Create static IP address
-gcloud compute addresses create my-app-public-ip --global
-    # to find the address run
-    gcloud compute addresses describe my-app-public-ip --global
-
-
-
 # create private cluster with custom subnet
 # gcloud beta container clusters create my-app-cluster \
 gcloud container clusters create my-app-cluster \
@@ -53,7 +41,7 @@ gcloud container clusters create my-app-cluster \
     --logging=NONE \
     --cluster-dns=clouddns \
     --cluster-dns-scope=cluster \
-    --zone=$MY_ZONE \
+    --zone=$MY_ZONE 
     # --enable-private-endpoint \  # https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#all_access 
     # --service-account="my service account" \
 
@@ -99,19 +87,15 @@ kubectl get nodes -l temp=true
     kubectl scale deployment --replicas=0 kube-dns --namespace=kube-system
 
 
+#Create static IP address
+gcloud compute addresses create my-app-public-ip --global
+    # to find the address run
+    gcloud compute addresses describe my-app-public-ip --global
 
-# CI/CD
-    # enable the APIs
-    gcloud services enable container.googleapis.com \
-    cloudbuild.googleapis.com \
-    sourcerepo.googleapis.com \
-    artifactregistry.googleapis.com \
-    secretmanager.googleapis.com
-
-    # create cloud armor security policy
+ # create cloud armor security policy
     gcloud compute security-policies create my-app-armor-policy \
     --description "policy for rate limiting" \
-    --type=CLOUD_ARMOR_EDGE \
+    --type=CLOUD_ARMOR_EDGE 
         # add rule to policy. Config setting details - https://cloud.google.com/armor/docs/rate-limiting-overview#throttle-traffic
         gcloud compute security-policies rules create 100 \
             --security-policy=my-app-armor-policy     \
@@ -121,6 +105,16 @@ kubectl get nodes -l temp=true
             --conform-action=allow           \
             --exceed-action=deny-429         \
             --enforce-on-key=IP
+
+
+# CI/CD
+    # enable the APIs
+    gcloud services enable container.googleapis.com \
+    cloudbuild.googleapis.com \
+    sourcerepo.googleapis.com \
+    artifactregistry.googleapis.com \
+    secretmanager.googleapis.com
+
     
     # Create helm repo 
         helm version
