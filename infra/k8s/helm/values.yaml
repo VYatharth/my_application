@@ -67,12 +67,8 @@ beService:
 
 ingress:
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.ssl.ipName }}"
-    networking.gke.io/managed-certificates: "{{ .Values.ssl.name }}"
-    networking.gke.io/v1beta1.FrontendConfig: "{{ .Values.frontendConfig.name }}"
     kubernetes.io/ingress.class: gce
   includeDefaultBackend: false
-  ingressClassName: gce
   rules:
     - http:
         paths:
@@ -96,7 +92,7 @@ ssl:
   domains: ['vyathartha.com', 'www.vyathartha.com']
 
 frontendConfig:
-  create: true
+  create: false
   name: my-app-frontend-config
 
 backendConfig:
