@@ -17,5 +17,5 @@
 
 # For using on docker
 - Create docker image **docker build -t user-app .**
-- Run **docker run -p 8080:8080 user-app** to create and run container
+- Run **docker run -d -p 8080:8080 user-app** to create and run container
 - open **http://localhost:8080/docs** in browser

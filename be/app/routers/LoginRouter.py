@@ -5,19 +5,10 @@ from app.schemas.UserSchema import UserRequestSchema, UserResponseSchema
 from app.services.UserService import UserService
 
 LoginRouter = APIRouter(
-  prefix='/login',
   tags=['login']
 )
 
-@LoginRouter.post(
-    "/"
-)
-def create(
-    loginData: LoginRequestSchema,
-    userService: UserService = Depends(),
-):
-    if userService.login(loginData):
-        return "User logged-in successfully"
-    else:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "Invalid Email or Password")
+@LoginRouter.get("/health", response_model=bool)
+def index():
+    return  True
 
