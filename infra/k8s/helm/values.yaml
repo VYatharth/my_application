@@ -72,6 +72,7 @@ ingress:
     networking.gke.io/v1beta1.FrontendConfig: "{{ .Values.frontendConfig.name }}"
     kubernetes.io/ingress.class: gce
   includeDefaultBackend: false
+  ingressClassName: gce
   rules:
     - http:
         paths:
