@@ -19,7 +19,8 @@ feDeployment:
   ports:
     - containerPort: 80
   image:
-    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-fe-docker-repo/my-app-fe
+    # repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-fe-docker-repo/my-app-fe
+    repository: vyathartha/my-app-fe
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
@@ -45,7 +46,8 @@ beDeployment:
   ports:
     - containerPort: 8080
   image:
-    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-be-docker-repo/my-app-be
+    repository: vyathartha/user-app
+    # repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-be-docker-repo/my-app-be
   resources: # The resource requests and limits for the container
     requests:
       cpu: "100m"
