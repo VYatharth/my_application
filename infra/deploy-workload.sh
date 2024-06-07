@@ -1,11 +1,11 @@
 
 # Create namespace (if needed)
-kubectl create namespace team-a
+kubectl create namespace my-app-ns
 # To use it we can either use --namespace flag with each command or set the namespace in context like this
-kubectl config set-context --current --namespace=team-a
+kubectl config set-context --current --namespace=my-app-ns
 
 # Create the deployment based on the configuration file:
-kubectl apply -f ../manifests/deployment-be.yaml --namespace=team-a
+kubectl apply -f ../manifests/deployment-be.yaml --namespace=my-app-ns
 
 # Create service
 kubectl apply -f ../manifests/be-svc.yaml
@@ -22,11 +22,11 @@ git switch -c develop origin/develop
 # Install helm - https://helm.sh/docs/intro/install/ 
 
 # Pull the packaged chart
-    helm pull bitnami/mysql 
+    # helm pull bitnami/mysql 
     # might need more steps to pull from my repository https://docs.google.com/document/d/1dyYB0SRvaKGH2FGy_zVteEeXq3CDweth-4WqwOqOoC4/edit#heading=h.mcxdgjajqcou
 
 # Install a package/chart
-    helm upgrade --install --atomic --namespace ns2 my-app-release ./helm --values ./helm/values.yaml
+    helm upgrade --install --atomic my-app-release ./helm --values ./helm/values.yaml --dry-run
 
 
 
