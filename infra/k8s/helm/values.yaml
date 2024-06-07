@@ -6,7 +6,8 @@ deploymentCommon:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
   image:
-    tag: IMAGE_TAG
+    # tag: IMAGE_TAG
+    tag: latest
     pullPolicy: Always
   nodeSelector: {}
 
