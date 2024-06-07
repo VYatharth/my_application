@@ -90,7 +90,7 @@ ingress:
                 port: "{{ .Values.feService.port }}"
 
 ssl:
-  create: true
+  create: false
   name: my-app-managed-cert
   ipName: my-app-public-ip
   domains: ['vyathartha.com', 'www.vyathartha.com']
