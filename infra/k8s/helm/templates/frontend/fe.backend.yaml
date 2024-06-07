@@ -12,7 +12,7 @@ spec:
     timeoutSec: 5
     healthyThreshold: 1
     unhealthyThreshold: 5
-    port: {{ .Values.feService.port }}
+    port: {{ .Values.feDeployment.containerPort }}
     type: HTTP
     requestPath: /health
 {{- end }}

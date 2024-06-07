@@ -9,7 +9,7 @@ spec:
     timeoutSec: 5
     healthyThreshold: 1
     unhealthyThreshold: 5
-    port: {{ .Values.beService.port }}
+    port: {{ .Values.beDeployment.containerPort }}
     type: HTTP
     requestPath: /api/health
 {{- end }}
