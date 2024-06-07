@@ -6,6 +6,9 @@ metadata:
 spec:
   securityPolicy:
     name:  {{ .Values.backendConfig.policyName }}
+  cdn:  
+    enabled: true
+    requestCoalescing: true
   healthCheck:
     checkIntervalSec: 60
     timeoutSec: 5
