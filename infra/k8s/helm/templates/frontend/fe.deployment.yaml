@@ -19,9 +19,7 @@ spec:
           name: my-app-fe-container
           imagePullPolicy: {{ .Values.deploymentCommon.image.pullPolicy }}
           ports:
-            {{ with index .Values.feDeployment.ports 0 }}
-            - containerPort: {{  .containerPort }}
-            {{ end }}
+            - containerPort: {{  .Values.feDeployment.containerPort }}
           resources:
             requests:
               cpu: {{ .Values.feDeployment.resources.requests.cpu }}
@@ -29,5 +27,23 @@ spec:
             limits:
               cpu: {{ .Values.feDeployment.resources.limits.cpu }}
               memory: {{ .Values.feDeployment.resources.limits.memory }}
+          readinessProbe:
+            httpGet:
+              path: {{  .Values.feDeployment.probePath }}
+              port: {{  .Values.feDeployment.containerPort }}
+            failureThreshold: 3
+            periodSeconds: 20
+            initialDelaySeconds: 25
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: {{  .Values.feDeployment.probePath }}
+              port: {{  .Values.feDeployment.containerPort }}
+            failureThreshold: 3
+            periodSeconds: 20
+            initialDelaySeconds: 25
+            successThreshold: 1
+            timeoutSeconds: 5
       dnsPolicy: {{ .Values.deploymentCommon.dnsPolicy }}
       restartPolicy: {{ .Values.deploymentCommon.restartPolicy }}

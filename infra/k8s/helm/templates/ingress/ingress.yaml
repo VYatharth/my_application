@@ -1,11 +1,10 @@
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-app-ingress
   {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{- tpl (toYaml . | nindent 4) $  }}
   {{- end }}
 spec:
   {{- if .Values.ingress.includeDefaultBackend }}
@@ -20,9 +19,11 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.ingress.rules }}
-    - http:
       {{- if .host }}
-      host: {{ .host | quote }}
+    - host: {{ .host | quote }}
+      http:
+      {{ else }}
+    - http:
       {{- end }}
         paths:
           {{- range .http.paths }}
