@@ -34,7 +34,7 @@ feService:
   name: my-app-fe-service
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "my-app-backendconfig-f   e"}'
+    cloud.google.com/backend-config: '{"default": "my-app-backendconfig-fe"}'
   type: ClusterIP
   port: 8081
 

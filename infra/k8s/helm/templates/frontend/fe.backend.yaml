@@ -6,7 +6,7 @@ metadata:
 spec:
   securityPolicy:
     name:  {{ .Values.backendConfig.policyName | quote }}
-  cdn:  # https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-configuration#cloud_cdn
+  cdn:  
     enabled: true
     requestCoalescing: true
   healthCheck:
