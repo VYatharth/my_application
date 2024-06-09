@@ -1,65 +1,75 @@
 nameOverride: ""
 fullnameOverride: ""
+gcpProjectId: "PROJECT_ID"
 
 deploymentCommon:
   dnsPolicy: ClusterFirst
   restartPolicy: Always
   image:
-    tag: latest
+    tag: IMAGE_TAG
+    # tag: latest
     pullPolicy: Always
   nodeSelector: {}
 
 feDeployment:
-  replicas: 1
+  replicas: 2
   labels:
     app: my-app-fe
+  containerPort: 80
+  probePath: /health
   ports:
     - containerPort: 80
   image:
-    repository: vyathartha/my-app-fe
+    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-fe-docker-repo/my-app-fe
+    # repository: vyathartha/my-app-fe
   resources: # The resource requests and limits for the container
     requests:
-      cpu: "250m"
-      memory: "200Mi"
+      cpu: "100m"
+      memory: "150Mi"
     limits:
-      cpu: "500m"
-      memory: "500Mi"
+      cpu: "150m"
+      memory: "250Mi"
 
 feService:
   name: my-app-fe-service
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/backend-config: '{"default": "my-app-backendconfig-fe"}'
   type: ClusterIP
   port: 8081
 
 beDeployment:
-  replicas: 1
+  replicas: 2
   labels:
     app: my-app-be
+  probePath: /api/health
+  containerPort: 8080
   ports:
     - containerPort: 8080
   image:
-    repository: vyathartha/user-app
-  resources: # The resource requests and limits for the container
+    # repository: vyathartha/user-app
+    repository: LOCATION-docker.pkg.dev/PROJECT_ID/my-app-be-docker-repo/my-app-be
+  resources: 
     requests:
-      cpu: "250m"
+      cpu: "100m"
       memory: "150Mi"
     limits:
-      cpu: "400m"
-      memory: "400Mi"
+      cpu: "150m"
+      memory: "250Mi"
 
 beService:
   name: my-app-be-service
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/backend-config: '{"default": "my-app-backendconfig-be"}'
   type: ClusterIP
   port: 8080
 
 ingress:
   annotations:
-    # kubernetes.io/ingress.global-static-ip-name: "global-ingress"
-    # networking.gke.io/managed-certificates: networking-managed-cert
-    # networking.gke.io/v1beta1.FrontendConfig: networking-fc
+    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.ssl.ipName }}"
+    networking.gke.io/managed-certificates: "{{ .Values.ssl.name }}"
+    networking.gke.io/v1beta1.FrontendConfig: "{{ .Values.frontendConfig.name }}"
     kubernetes.io/ingress.class: gce
   includeDefaultBackend: false
   rules:
@@ -78,3 +88,17 @@ ingress:
                 name: "{{ .Values.feService.name }}"
                 port: "{{ .Values.feService.port }}"
 
+ssl:
+  create: true
+  name: my-app-managed-cert
+  ipName: my-app-public-ip
+  domains: ['vyathartha.com', 'www.vyathartha.com']
+
+frontendConfig:
+  create: true
+  name: my-app-frontend-config
+
+backendConfig:
+  create: true
+  applyArmor: false
+  policyName: my-app-armor-policy

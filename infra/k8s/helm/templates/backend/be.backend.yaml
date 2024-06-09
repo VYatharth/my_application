@@ -1,0 +1,19 @@
+{{- if .Values.backendConfig.create }}
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: my-app-backendconfig-be
+spec:
+  {{- if .Values.backendConfig.applyArmor }}
+  securityPolicy:
+    name:  {{ .Values.backendConfig.policyName }}
+  {{- end }}
+  healthCheck:
+    checkIntervalSec: 60
+    timeoutSec: 5
+    healthyThreshold: 1
+    unhealthyThreshold: 5
+    port: {{ .Values.beDeployment.containerPort }}
+    type: HTTP
+    requestPath: {{  .Values.beDeployment.probePath }}
+{{- end }}

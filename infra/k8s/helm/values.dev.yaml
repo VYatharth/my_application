@@ -59,6 +59,7 @@ ingress:
   #   nginx.ingress.kubernetes.io/configuration-snippet: |
   #        rewrite ^/api(/|$)(.*) /$2 break;
   ingressClassName: nginx
+  includeDefaultBackend: false
   rules:
     - host: hello-world.example
       http:
@@ -76,6 +77,14 @@ ingress:
                 name: "{{ .Values.feService.name }}"
                 port: "{{ .Values.feService.port }}"
 
+ssl:
+  create: false
+
+frontendConfig:
+  create: false
+
+backendConfig:
+  create: false
   
 # Default values for local.
 # This is a YAML-formatted file.
