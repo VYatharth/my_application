@@ -16,7 +16,7 @@ kubectl apply -f ../manifests/ingress.yaml
 
 # ---------------- USING HELM ------------------------------------------
 git clone https://github.com/VYatharth/my_application.git
-cd my_application/infra/k8s/helm
+cd my_application/infra/k8s
 git switch -c develop origin/develop
 
 # Install helm - https://helm.sh/docs/intro/install/ 

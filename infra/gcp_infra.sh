@@ -50,7 +50,9 @@ gcloud container clusters create my-app-cluster \
 gcloud container node-pools create "my-app-node-pool-1" \
     --cluster=$MY_CLUSTER --zone=$MY_ZONE \
     --machine-type "e2-medium" \
-    --num-nodes "2" --node-labels=temp=true --preemptible
+    --num-nodes "2" --node-labels=temp=true --preemptible \
+    --disk-type pd-standard \
+    --disk-size 25
 #  list only the nodes with the temp=true label
 kubectl get nodes -l temp=true
 
@@ -64,16 +66,12 @@ kubectl get nodes -l temp=true
     # get IP of instance
     gcloud compute instances describe my-app-source-instance --zone=$MY_ZONE | grep natIP
 
-    gcloud container clusters update my-app-cluster \
-        --enable-master-authorized-networks \
-        --master-authorized-networks [natIP of above command/32]
+    # SSH into the instance then install kubectl
+    sudo apt-get install kubectl
+    sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+    gcloud container clusters get-credentials my-app-cluster --zone=$MY_ZONE
 
-        # SSH into the instance then install kubectl
-        sudo apt-get install kubectl
-        sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-        gcloud container clusters get-credentials my-app-cluster --zone=$MY_ZONE
-
-        kubectl get nodes --output wide
+    kubectl get nodes --output wide
 
     # OR
 
@@ -82,6 +80,13 @@ kubectl get nodes -l temp=true
     curl ifconfig.me
     # configure authorized network and then run
     gcloud container clusters get-credentials my-app-cluster
+
+
+
+    gcloud container clusters update my-app-cluster \
+        --enable-master-authorized-networks \
+        --master-authorized-networks [natIP of above command/32]
+   
 
     kubectl scale deployment --replicas=0 kube-dns-autoscaler --namespace=kube-system
     kubectl scale deployment --replicas=0 kube-dns --namespace=kube-system
@@ -92,16 +97,17 @@ gcloud compute addresses create my-app-public-ip --global
     # to find the address run
     gcloud compute addresses describe my-app-public-ip --global
 
+
  # create cloud armor security policy
     gcloud compute security-policies create my-app-armor-policy \
-    --description "policy for rate limiting" \
-    --type=CLOUD_ARMOR_EDGE 
+    --description "policy for rate limiting" 
+    # --type=CLOUD_ARMOR_EDGE 
         # add rule to policy. Config setting details - https://cloud.google.com/armor/docs/rate-limiting-overview#throttle-traffic
         gcloud compute security-policies rules create 100 \
             --security-policy=my-app-armor-policy     \
             --action=throttle                   \
             --rate-limit-threshold-count=20           \
-            --rate-limit-threshold-interval-sec=10   \
+            --rate-limit-threshold-interval-sec=30   \
             --conform-action=allow           \
             --exceed-action=deny-429         \
             --enforce-on-key=IP
