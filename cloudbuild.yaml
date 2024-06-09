@@ -25,7 +25,8 @@ steps:
     args:
     - '-c'
     - |
-      sed -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${_VERSION}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml 
+      sed -i -e "s/PROJECT_ID/${PROJECT_ID}/g" -e "s/IMAGE_TAG/${_VERSION}/g" -e "s/LOCATION/${_LOCATION}/g" infra/k8s/helm/values.yaml && \
+      cat infra/k8s/helm/values.yaml
   
   - name: 'gcr.io/cloud-builders/gcloud'
     id: Push chart
@@ -42,7 +43,7 @@ steps:
 
 substitutions:
   _LOCATION: us-central1 
-  _VERSION: 0.1.0 
+  _VERSION: 0.2.0 
 # Store images in Google Artifact Registry 
 images:
   - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}

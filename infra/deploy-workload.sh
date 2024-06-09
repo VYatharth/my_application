@@ -20,10 +20,16 @@ cd my_application/infra/k8s
 git switch -c develop origin/develop
 
 # Install helm - https://helm.sh/docs/intro/install/ 
+# Install helm chart from package in OCI registry - https://helm.sh/docs/topics/registries/
 
 # Pull the packaged chart
-    # helm pull bitnami/mysql 
-    # might need more steps to pull from my repository https://docs.google.com/document/d/1dyYB0SRvaKGH2FGy_zVteEeXq3CDweth-4WqwOqOoC4/edit#heading=h.mcxdgjajqcou
+    # helm pull oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.1.0
+    # helm template myrelease oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.1.0
+    helm upgrade --install --atomic my-app-release oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.1.0 --dry-run
+
+
+    helm pull bitnami/mysql 
+    might need more steps to pull from my repository https://docs.google.com/document/d/1dyYB0SRvaKGH2FGy_zVteEeXq3CDweth-4WqwOqOoC4/edit#heading=h.mcxdgjajqcou
 
 # Install a package/chart
     helm upgrade --install --atomic my-app-release ./helm --values ./helm/values.yaml --dry-run
