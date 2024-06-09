@@ -82,10 +82,12 @@ kubectl get nodes -l temp=true
     gcloud container clusters get-credentials my-app-cluster
 
 
-
+    # disable authorized network access - https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks#disable
     gcloud container clusters update my-app-cluster \
         --enable-master-authorized-networks \
         --master-authorized-networks [natIP of above command/32]
+
+    gcloud container clusters describe my-app-cluster
    
 
     kubectl scale deployment --replicas=0 kube-dns-autoscaler --namespace=kube-system
