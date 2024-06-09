@@ -4,8 +4,10 @@ kind: BackendConfig
 metadata:
   name: my-app-backendconfig-be
 spec:
+  {{- if .Values.backendConfig.applyArmor }}
   securityPolicy:
     name:  {{ .Values.backendConfig.policyName }}
+  {{- end }}
   healthCheck:
     checkIntervalSec: 60
     timeoutSec: 5

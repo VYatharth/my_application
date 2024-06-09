@@ -100,4 +100,5 @@ frontendConfig:
 
 backendConfig:
   create: true
+  applyArmor: false
   policyName: my-app-armor-policy
