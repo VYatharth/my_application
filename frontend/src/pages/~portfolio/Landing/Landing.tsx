@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { Button, Link } from '@chakra-ui/react';
-import { FaTwitter, FaLinkedin, FaGithub, FaYoutube, FaBlogger } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { headerData } from '../../../data/headerData';
 import { socialsData } from '../../../data/socialsData';
+import { Link } from '@tanstack/react-router';
 
 const Landing = () => {
 
@@ -64,50 +63,7 @@ const Landing = () => {
                         <h1 className='text-4xl font-semibold my-4'>{headerData.name}</h1>
                         <p className='mt-4 text-lg font-medium opacity-70'>{headerData.desciption}</p>
 
-                        <div className='lcr-buttonContainer mt-8 w-72 flex items-center justify-between'>
-                            {headerData.resumePdf && (
-                                <a
-                                    href={headerData.resumePdf}
-                                    download='resume'
-                                    target='_blank'
-                                    rel='noreferrer'
-                                >
-                                    <Button
-                                        className='text-primary rounded-full w-36 h-12 text-base font-medium border-2 border-primary transition ease-out duration-100'
-                                        style={{
-                                            color: "ui.main",
-                                            borderColor: "ui.main",
-                                        }}
-                                        _hover={{
-                                            backgroundColor: "ui.dim",
-                                            color: "ui.secondary",
-                                            borderColor: "ui.dim",
-                                        }}
-                                    >
-                                        Download CV
-                                    </Button>
-                                </a>
-                            )}
-                            <Link
-                                href='/#contacts'
-                            >
-                                <Button
-                                    className='bg-primary text-secondary rounded-full w-36 h-12 text-base font-medium border-2 border-primary transition ease-out duration-100'
-                                    style={{
-                                        backgroundColor: "ui.main",
-                                        color: "ui.secondary",
-                                        borderColor: "ui.main",
-                                    }}
-                                    _hover={{
-                                        backgroundColor: "ui.secondary",
-                                        color: "ui.dim",
-                                        borderColor: "ui.dim",
-                                    }}
-                                >
-                                    Contact
-                                </Button>
-                            </Link>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

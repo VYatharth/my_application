@@ -1,30 +1,21 @@
-import { Button, Center, Container, Image } from '@chakra-ui/react';
 import { Link, Link as RouterLink } from '@tanstack/react-router';
-import Logo from '../../assets/images/fastapi-logo.svg';
 import Landing from './Landing/Landing';
 
 const Portfolio = () => {
   return (
     <>
-      <Container
-        h="100vh"
-        maxW="sm"
-        alignItems="stretch"
-        justifyContent="center"
-        gap={4}
-        centerContent
-      >
-        <Landing></Landing>
-        <p>This is my portfolio</p>
-        <Center>
-          <Link as={RouterLink} to="/admin" color="blue.500">
-            Admin
-          </Link>
-        </Center>
-        <Button variant="primary" type="submit">
-          Log In
-        </Button>
-      </Container>
+      <h1 className="text-tahiti font-bold underline text-red-200">
+      Hello world!
+    </h1>
+      <Landing />
+      <div className='bg-yellow-200'>
+
+      <p className='text-red-200'>This is my portfolio</p>
+      </div>
+      <Link  to="/admin" >
+        Admin
+      </Link>
+
     </>
   );
 };
