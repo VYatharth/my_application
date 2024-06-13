@@ -15,7 +15,8 @@
         "noArrayIndexKey": "off"
       },
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useSelfClosingElements": "off"
       }
     }
   },
