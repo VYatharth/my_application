@@ -8,7 +8,7 @@ const Landing = () => {
 
     return (
         <>
-            <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-[110vh]"
+            <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-[110vh] border-b border-gray-100"
             >
                 <div className="absolute top-0 w-full h-full bg-center bg-cover"
                     style={{
@@ -23,7 +23,7 @@ const Landing = () => {
                                 className="container relative z-30  pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48"
                             >
                                 <div className="flex flex-col items-center justify-center lg:flex-row">
-                                    <div className="rounded-full border-8 border-primary shadow-xl">
+                                    <div className="rounded-full border-8 border-white shadow-xl">
                                         <img
                                             src={AuthorImage}
                                             className="h-48 rounded-full sm:h-56"
