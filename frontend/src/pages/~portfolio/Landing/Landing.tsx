@@ -3,7 +3,7 @@ import { headerData } from '../../../data/headerData';
 import { socialsData } from '../../../data/socialsData';
 import { Link } from '@tanstack/react-router';
 import AuthorImage from "../../../assets/images/blog-author.jpg"
-import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare } from "react-icons/bi";
+import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
 const Landing = () => {
 
     return (
@@ -12,7 +12,7 @@ const Landing = () => {
             >
                 <div className="absolute top-0 w-full h-full bg-center bg-cover"
                     style={{
-                        backgroundImage: "url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80')"
+                        backgroundImage: "url('/src/assets/images/bg-hero.jpg')"
                     }}>
                     <span id="blackOverlay" className="w-full h-full absolute opacity-75 bg-black"></span>
                 </div>
@@ -34,7 +34,7 @@ const Landing = () => {
                                         <h1
                                             className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl"
                                         >
-                                            Hello I'm Christy Smith!
+                                            Hello I'm Yathartha Varshneya!
                                         </h1>
                                         <div
                                             className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start"
@@ -44,7 +44,7 @@ const Landing = () => {
                                             >
                                                 <p className="font-body text-lg uppercase text-white">Let's connect</p>
                                                 <div className="hidden sm:block">
-                                                    <i className="bx bx-chevron-right text-3xl text-yellow"></i>
+                                                    <BiChevronRight className="text-3xl text-yellow-600"></BiChevronRight>
                                                 </div>
                                             </div>
                                             <div
@@ -73,25 +73,6 @@ const Landing = () => {
                         </div>
 
                     </div>
-                </div>
-                <div
-                    className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
-                    style={{ height: "70px" }}
-                >
-                    <svg
-                        className="absolute bottom-0 overflow-hidden"
-                        xmlns="http://www.w3.org/2000/svg"
-                        preserveAspectRatio="none"
-                        version="1.1"
-                        viewBox="0 0 2560 100"
-                        x="0"
-                        y="0"
-                    >
-                        <polygon
-                            className="text-gray-300 fill-current"
-                            points="2560 0 2560 100 0 100"
-                        ></polygon>
-                    </svg>
                 </div>
             </div>
         </>
