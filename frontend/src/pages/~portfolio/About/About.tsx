@@ -6,7 +6,7 @@ import BulletEllipse from "../../../components/BulletEllipse/BulletEllipse";
 const About = () => {
 
     return (
-        <section className="relative py-20 bg-gray-100">
+        <section className="relative py-20 bg-gray-100 pb-44">
             <div
                 className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
                 style={{ height: "80px" }}
@@ -55,30 +55,13 @@ const About = () => {
                             </p>
                             <ul className="list-none mt-6">
                                 <li className="py-2">
-                                    <div className="flex items-center">
-                                        <BulletEllipse />
-                                        <div>
-                                            <h4 className="text-gray-600">
-                                                Carefully crafted components
-                                            </h4>
-                                        </div>
-                                    </div>
+                                    <BulletEllipse text="Carefully crafted components" textClasses="text-gray-600" />
                                 </li>
                                 <li className="py-2">
-                                    <div className="flex items-center">
-                                        <BulletEllipse />
-                                        <div>
-                                            <h4 className="text-gray-600">Amazing page examples</h4>
-                                        </div>
-                                    </div>
+                                    <BulletEllipse text="Amazing page examples" textClasses="text-gray-600" />
                                 </li>
                                 <li className="py-2">
-                                    <div className="flex items-center">
-                                        <BulletEllipse />
-                                        <div>
-                                            <h4 className="text-gray-600">Dynamic components</h4>
-                                        </div>
-                                    </div>
+                                    <BulletEllipse text="Dynamic components" textClasses="text-gray-600" />
                                 </li>
                             </ul>
                         </div>
