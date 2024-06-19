@@ -11,7 +11,7 @@ export default {
         'body-color': '#637381'
       },
       boxShadow: {
-        '2': '0px 5px 12px 0px rgba(0, 0, 0, 0.10)',
+        '2': '0px 5px 12px 0px rgba(0, 0, 0, 0.40)',
       }
     },
   },

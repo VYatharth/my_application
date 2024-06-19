@@ -6,7 +6,6 @@ export interface AnimatedCardProps {
     index: number;
     title?: string;
     icon?: any;
-
 }
 
 const AnimatedCard = ({ index, title, icon }: AnimatedCardProps) => {
