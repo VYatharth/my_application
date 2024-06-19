@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import AchievementCard from "../../../../components/AchievementCard/AchievementCard";
 import awsBadge from "../../../../assets/images/aws-badge.png";
 import gcpBadge from "../../../../assets/images/gcp-badge2.png";
-
+import { BiSolidChevronLeft, BiSolidChevronRight } from "react-icons/bi";
 const AchievementSlider = () => {
     const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
 
@@ -66,16 +66,18 @@ const AchievementSlider = () => {
             </div>
             <div className="flex flex-row gap-3 mt-28">
                 <button type="button"
-                    className="text-white bg-indigo-400 rounded-md py-2 px-4"
+                    className="text-white p-2 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-2 rounded-full bg-cyan-800"
                     onClick={handleBack}
                 >
-                    Back
+                    <BiSolidChevronLeft ></BiSolidChevronLeft>
                 </button>
+
                 <button type="button"
-                    className="text-white bg-indigo-400 rounded-md py-2 px-4"
+                    className="text-white p-2 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-2 rounded-full bg-cyan-800"
                     onClick={handleNext}
                 >
-                    Next
+                    <BiSolidChevronRight  ></BiSolidChevronRight >
+
                 </button>
             </div>
         </div>

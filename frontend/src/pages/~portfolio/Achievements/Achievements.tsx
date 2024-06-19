@@ -20,7 +20,7 @@ const Achievements = () => {
                     <div className="w-full md:w-4/12 px-4 text-center">
                         <div className="relative flex flex-col min-w-0 break-words bg-gray-100 w-full mb-8 shadow-lg rounded-lg">
                             <div className="px-4 py-5 flex-auto">
-                                <div className="text-white p-2 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-2 rounded-full bg-gradient-to-b from-cyan-600 to-cyan-800">
+                                <div className="text-white p-2 text-center inline-flex items-center justify-center w-14 h-14 mb-5 shadow-2 rounded-full bg-gradient-to-b from-cyan-600 to-cyan-800">
                                     <img src={gcp} alt="" className="w-full" />
                                 </div>
                                 <h6 className="text-xl font-semibold">
@@ -37,7 +37,7 @@ const Achievements = () => {
                     <div className="pt-6 w-full md:w-4/12 px-4 text-center">
                         <div className="relative flex flex-col min-w-0 break-words bg-gray-100 w-full mb-8 shadow-lg rounded-lg">
                             <div className="px-4 py-5 flex-auto">
-                                <div className="text-white p-0 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-2 rounded-full bg-gradient-to-b from-cyan-600 to-cyan-800">
+                                <div className="text-white p-0 text-center inline-flex items-center justify-center w-14 h-14 mb-5 shadow-2 rounded-full bg-gradient-to-b from-cyan-600 to-cyan-800">
                                     <img src={aws} alt="" className="w-full color-white" />
                                 </div>
                                 <h6 className="text-xl font-semibold">
