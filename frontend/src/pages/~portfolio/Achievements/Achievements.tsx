@@ -54,7 +54,7 @@ const Achievements = () => {
 
                 <div className="flex flex-wrap justify-center text-center mb-4 mt-8">
                     <div className="w-full lg:w-6/12 px-4">
-                        <h2 className="text-4xl font-semibold">
+                        <h2 className="text-4xl font-semibold text-cyan-800">
                             My Achievements
                         </h2>
                         <p className="text-lg leading-relaxed m-4 text-gray-600">
