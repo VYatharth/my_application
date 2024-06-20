@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './pages/~__root'
 import { Route as PortfolioRouteImport } from './pages/~portfolio/~route'
 import { Route as HealthImport } from './pages/~health'
+import { Route as BlogsRouteImport } from './pages/~blogs/~route'
 import { Route as AdminRouteImport } from './pages/~admin/~route'
 import { Route as IndexImport } from './pages/~index'
 
@@ -25,6 +26,11 @@ const PortfolioRouteRoute = PortfolioRouteImport.update({
 
 const HealthRoute = HealthImport.update({
   path: '/health',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsRouteRoute = BlogsRouteImport.update({
+  path: '/blogs',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,6 +56,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRoute
     }
+    '/blogs': {
+      preLoaderRoute: typeof BlogsRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/health': {
       preLoaderRoute: typeof HealthImport
       parentRoute: typeof rootRoute
@@ -66,6 +76,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   AdminRouteRoute,
+  BlogsRouteRoute,
   HealthRoute,
   PortfolioRouteRoute,
 ])

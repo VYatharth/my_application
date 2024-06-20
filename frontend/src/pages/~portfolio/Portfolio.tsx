@@ -5,6 +5,7 @@ import About from './About/About';
 import Skills from './Skills/Skills';
 import Achievements from './Achievements/Achievements';
 import Experience from './Experience/Experience';
+import Work from './Work/Work';
 
 
 const Portfolio = () => {
@@ -20,6 +21,7 @@ const Portfolio = () => {
       <Skills></Skills>
       <Achievements></Achievements>
       <Experience></Experience>
+      <Work></Work>
      
       
 

@@ -4,6 +4,9 @@ import AchievementCard from "../../../../components/AchievementCard/AchievementC
 import awsBadge from "../../../../assets/images/aws-badge.png";
 import gcpBadge from "../../../../assets/images/gcp-badge2.png";
 import { BiSolidChevronLeft, BiSolidChevronRight } from "react-icons/bi";
+
+// Documentation - https://www.youtube.com/watch?v=RMTdoi_5sAA
+
 const AchievementSlider = () => {
     const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
 

@@ -1,4 +1,3 @@
-import AboutImg from "../../../assets/images/about2.png";
 import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
 import { BiSolidBookOpen } from "react-icons/bi";
 import {
