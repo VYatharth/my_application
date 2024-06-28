@@ -10,6 +10,8 @@ import gcp from "../../../assets/images/gcp4.png";
 import aws from "../../../assets/images/aws-logo.png";
 
 const Achievements = () => {
+
+
     return (
         <section className="pb-60 bg-gray-300 -mt-24">
 

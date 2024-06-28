@@ -1,6 +1,5 @@
 import { Link, Link as RouterLink } from '@tanstack/react-router';
 import Landing from './Landing/Landing';
-import Logo from "../../assets/images/img1.png"
 import About from './About/About';
 import Skills from './Skills/Skills';
 import Achievements from './Achievements/Achievements';
