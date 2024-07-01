@@ -1,6 +1,4 @@
-import AboutImg from "../../../assets/images/about2.png";
 import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
-import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
 import BulletEllipse from "../../../components/BulletEllipse/BulletEllipse";
 
 const About = () => {
