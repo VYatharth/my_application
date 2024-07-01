@@ -1,13 +1,6 @@
-import AboutImg from "../../../assets/images/about2.png";
-import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
-import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
-import BulletEllipse from "../../../components/BulletEllipse/BulletEllipse";
-import AchievementCard from "../../../components/AchievementCard/AchievementCard";
-import ImageSlider from "../../../components/ImageSlider/ImageSlider";
-import ImageSliderCircular from "../../../components/ImageSlider/ImageSliderCircular";
-import AchievementSlider from "./AchievementSlider/AchievementSlider";
-import gcp from "../../../assets/images/gcp4.png";
 import aws from "../../../assets/images/aws-logo.png";
+import gcp from "../../../assets/images/gcp4.png";
+import AchievementSlider from "./AchievementSlider/AchievementSlider";
 
 const Achievements = () => {
 
