@@ -1,9 +1,5 @@
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { headerData } from '../../../data/headerData';
-import { socialsData } from '../../../data/socialsData';
-import { Link } from '@tanstack/react-router';
 import AuthorImage from "../../../assets/images/blog-author.jpg"
-import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
+import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
 const Landing = () => {
 
     return (
