@@ -1,6 +1,4 @@
-import AboutImg from "../../../assets/images/about2.png";
-import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
-import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedin, BiLogoLinkedinSquare, BiSolidChip  } from "react-icons/bi";
+import { BiSolidChip  } from "react-icons/bi";
 import BulletEllipse from "../../../components/BulletEllipse/BulletEllipse";
 import { LayoutGroup } from "framer-motion";
 import ExpandableTag from "../../../components/ExpandableTag/ExpandableTag";
