@@ -1,3 +1,4 @@
+import { BiLogoLinkedinSquare } from "react-icons/bi";
 import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
 import BulletEllipse from "../../../components/BulletEllipse/BulletEllipse";
 
