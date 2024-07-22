@@ -2,7 +2,7 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { UserRequestSchema,UserResponseSchema,LoginRequestSchema } from './models';
+import type { UserRequestSchema,UserResponseSchema,Body_upload_files_uploadfiles__post } from './models';
 
 
 
@@ -121,10 +121,10 @@ requestBody,
 
 	/**
 	 * Delete
-	 * @returns unknown Successful Response
+	 * @returns string Successful Response
 	 * @throws ApiError
 	 */
-	public static deleteUsersIdDelete(data: TDataDeleteUsersIdDelete): CancelablePromise<unknown> {
+	public static deleteUsersIdDelete(data: TDataDeleteUsersIdDelete): CancelablePromise<string> {
 		const {
 id,
 } = data;
@@ -142,27 +142,76 @@ id,
 
 }
 
-export type TDataCreateLoginPost = {
-                requestBody: LoginRequestSchema
+export type TDataUploadFilesUploadfilesPost = {
+                formData: Body_upload_files_uploadfiles__post
+                
+            }
+export type TDataQuestionQuestionGet = {
+                question: string
                 
             }
 
 export class LoginService {
 
 	/**
-	 * Create
+	 * Index
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static indexHealthGet(): CancelablePromise<boolean> {
+				return __request(OpenAPI, {
+			method: 'GET',
+			url: '/health',
+		});
+	}
+
+	/**
+	 * Index
 	 * @returns unknown Successful Response
 	 * @throws ApiError
 	 */
-	public static createLoginPost(data: TDataCreateLoginPost): CancelablePromise<unknown> {
+	public static indexModelsGet(): CancelablePromise<unknown> {
+				return __request(OpenAPI, {
+			method: 'GET',
+			url: '/models',
+		});
+	}
+
+	/**
+	 * Upload Files
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static uploadFilesUploadfilesPost(data: TDataUploadFilesUploadfilesPost): CancelablePromise<string> {
 		const {
-requestBody,
+formData,
 } = data;
 		return __request(OpenAPI, {
 			method: 'POST',
-			url: '/login/',
-			body: requestBody,
-			mediaType: 'application/json',
+			url: '/uploadfiles/',
+			formData: formData,
+			mediaType: 'multipart/form-data',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Question
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static questionQuestionGet(data: TDataQuestionQuestionGet): CancelablePromise<string> {
+		const {
+question,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/question/',
+			query: {
+				question
+			},
 			errors: {
 				422: `Validation Error`,
 			},

@@ -1,12 +1,11 @@
-export type HTTPValidationError = {
-	detail?: Array<ValidationError>;
+export type Body_upload_files_uploadfiles__post = {
+	files: Array<Blob | File>;
 };
 
 
 
-export type LoginRequestSchema = {
-	email: string;
-	password: string;
+export type HTTPValidationError = {
+	detail?: Array<ValidationError>;
 };
 
 

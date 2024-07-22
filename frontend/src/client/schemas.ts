@@ -1,3 +1,16 @@
+export const $Body_upload_files_uploadfiles__post = {
+	properties: {
+		files: {
+	type: 'array',
+	contains: {
+	type: 'binary',
+	format: 'binary',
+},
+	isRequired: true,
+},
+	},
+} as const;
+
 export const $HTTPValidationError = {
 	properties: {
 		detail: {
@@ -5,19 +18,6 @@ export const $HTTPValidationError = {
 	contains: {
 		type: 'ValidationError',
 	},
-},
-	},
-} as const;
-
-export const $LoginRequestSchema = {
-	properties: {
-		email: {
-	type: 'string',
-	isRequired: true,
-},
-		password: {
-	type: 'string',
-	isRequired: true,
 },
 	},
 } as const;
