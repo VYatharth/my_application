@@ -63,12 +63,12 @@ async def upload_files(files: list[UploadFile]) -> str:
     await get_vector_store(text_chunks)
     return  'uploaded'
 
-@LoginRouter.get("/question", response_model=Dict[str, Any])
+@LoginRouter.get("/question", response_model=str)
 async def question(question: str) :
     result = {'output_text': ''}
     if question:
-      result = user_input(question) 
-    return result
+        result = user_input(question) 
+    return result.get('output_text', 'no data found')
     
     
 
