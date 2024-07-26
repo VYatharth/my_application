@@ -65,6 +65,10 @@ beService:
   type: ClusterIP
   port: 8080
 
+beServiceAccount:
+  name: my-app-be-k8s-sa
+ 
+
 ingress:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.ssl.ipName }}"
@@ -87,6 +91,8 @@ ingress:
               service:
                 name: "{{ .Values.feService.name }}"
                 port: "{{ .Values.feService.port }}"
+
+namespace: my-app-ns
 
 ssl:
   create: true

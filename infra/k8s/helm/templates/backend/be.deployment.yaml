@@ -4,6 +4,7 @@ metadata:
   name: my-app-be-deployment
   labels:
     name: my-app-be
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.beDeployment.replicas }}
   selector:
@@ -47,3 +48,6 @@ spec:
             timeoutSeconds: 5
       dnsPolicy: {{ .Values.deploymentCommon.dnsPolicy }}
       restartPolicy: {{ .Values.deploymentCommon.restartPolicy }}
+      serviceAccountName:  {{ .Values.beServiceAccount.name }}
+      nodeSelector:
+        iam.gke.io/gke-metadata-server-enabled: "true"
