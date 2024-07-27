@@ -3,6 +3,10 @@ export MY_REGION=us-central1
 export MY_ZONE=us-central1-c
 export MY_CLUSTER=my-app-cluster
 export MY_NETWORK=my-app-network
+export SECRET1_NAME=gg-secret
+export QUESTION_BUCKET=question-bucket
+export MY_NAMESPACE=my-app-ns
+export BE_SERVICE_ACCOUNT=my-app-be-k8s-sa
 export PROJECT_ID=$(gcloud config get-value project)
 export PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
 gcloud config set compute/region $MY_REGION
@@ -41,9 +45,15 @@ gcloud container clusters create my-app-cluster \
     --logging=NONE \
     --cluster-dns=clouddns \
     --cluster-dns-scope=cluster \
-    --zone=$MY_ZONE 
+    --zone=$MY_ZONE \
+    --workload-pool=$PROJECT_ID.svc.id.goog
     # --enable-private-endpoint \  # https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#all_access 
     # --service-account="my service account" \
+
+    # For updating an existing cluster
+        # gcloud container clusters update $MY_CLUSTER \
+        # --location=LOCATION \
+        # --workload-pool=PROJECT_ID.svc.id.goog
 
 # Create node pool
     # If you receive an error that no preemptible instances are available, you can remove the --preemptible option to proceed
@@ -52,44 +62,50 @@ gcloud container node-pools create "my-app-node-pool-1" \
     --machine-type "e2-medium" \
     --num-nodes "2" --node-labels=temp=true --preemptible \
     --disk-type pd-standard \
-    --disk-size 25
-#  list only the nodes with the temp=true label
-kubectl get nodes -l temp=true
+    --disk-size 25 \
+    --workload-metadata=GKE_METADATA
+
+    # After creating new pool delete the old pool manually
+
+
 
 
 # Enable master authorized network
-    # create a compute instance
-    gcloud compute instances create my-app-source-instance --zone=$MY_ZONE  \
-    --network=my-app-network \
-    --subnet my-app-subnet \
-    --scopes 'https://www.googleapis.com/auth/cloud-platform'
-    # get IP of instance
-    gcloud compute instances describe my-app-source-instance --zone=$MY_ZONE | grep natIP
+    # To connect from a compute instance
+        # create a compute instance
+        gcloud compute instances create my-app-source-instance --zone=$MY_ZONE  \
+        --network=my-app-network \
+        --subnet my-app-subnet \
+        --scopes 'https://www.googleapis.com/auth/cloud-platform'
+        # get IP of instance
+        gcloud compute instances describe my-app-source-instance --zone=$MY_ZONE | grep natIP
 
-    # SSH into the instance then install kubectl
-    sudo apt-get install kubectl
-    sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-    gcloud container clusters get-credentials my-app-cluster --zone=$MY_ZONE
+        # SSH into the instance then install kubectl
+        sudo apt-get install kubectl
+        sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+        gcloud container clusters get-credentials my-app-cluster --zone=$MY_ZONE
 
-    kubectl get nodes --output wide
+        kubectl get nodes --output wide
 
     # OR
 
     # TO connect to cluster from cloud shell
+        # configure authorized network and then run
+        gcloud container clusters get-credentials my-app-cluster
+        #  list only the nodes with the temp=true label 
+        kubectl get nodes -l temp=true
+        curl ifconfig.me
+
+
+    # enable authorized network (to disable authorized network access - https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks#disable)
     # authorize cloud shell IP (only works when --enable-private-endpoint is not enabled)
-    curl ifconfig.me
-    # configure authorized network and then run
-    gcloud container clusters get-credentials my-app-cluster
-
-
-    # disable authorized network access - https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks#disable
     gcloud container clusters update my-app-cluster \
         --enable-master-authorized-networks \
         --master-authorized-networks [natIP of above command/32]
 
     gcloud container clusters describe my-app-cluster
    
-
+    # remove unnecessary default workload objects
     kubectl scale deployment --replicas=0 kube-dns-autoscaler --namespace=kube-system
     kubectl scale deployment --replicas=0 kube-dns --namespace=kube-system
 
@@ -100,19 +116,19 @@ gcloud compute addresses create my-app-public-ip --global
     gcloud compute addresses describe my-app-public-ip --global
 
 
- # create cloud armor security policy
-    gcloud compute security-policies create my-app-armor-policy \
-    --description "policy for rate limiting" 
-    # --type=CLOUD_ARMOR_EDGE 
-        # add rule to policy. Config setting details - https://cloud.google.com/armor/docs/rate-limiting-overview#throttle-traffic
-        gcloud compute security-policies rules create 100 \
-            --security-policy=my-app-armor-policy     \
-            --action=throttle                   \
-            --rate-limit-threshold-count=20           \
-            --rate-limit-threshold-interval-sec=30   \
-            --conform-action=allow           \
-            --exceed-action=deny-429         \
-            --enforce-on-key=IP
+#  # create cloud armor security policy
+#     gcloud compute security-policies create my-app-armor-policy \
+#     --description "policy for rate limiting" 
+#     # --type=CLOUD_ARMOR_EDGE 
+#         # add rule to policy. Config setting details - https://cloud.google.com/armor/docs/rate-limiting-overview#throttle-traffic
+#         gcloud compute security-policies rules create 100 \
+#             --security-policy=my-app-armor-policy     \
+#             --action=throttle                   \
+#             --rate-limit-threshold-count=20           \
+#             --rate-limit-threshold-interval-sec=30   \
+#             --conform-action=allow           \
+#             --exceed-action=deny-429         \
+#             --enforce-on-key=IP
 
 
 # CI/CD
@@ -123,11 +139,10 @@ gcloud compute addresses create my-app-public-ip --global
     artifactregistry.googleapis.com \
     secretmanager.googleapis.com
 
-    
-    # Create helm repo 
-        helm version
+     
 
     # create docker repo - https://cloud.google.com/artifact-registry/docs/helm/store-helm-charts
+        # repo for helm
         gcloud artifacts repositories create my-app-helm-repo --repository-format=docker \
             --location=$MY_REGION --description="Helm repository"
 
@@ -170,39 +185,48 @@ gcloud compute addresses create my-app-public-ip --global
 
     # Grant appropriate role to the cloud build service account
         # Grant the registry writer role to the Cloud Build service account: 
-        gcloud artifacts repositories add-iam-policy-binding my-app-helm-repo \
-            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
-            --role=roles/artifactregistry.writer
+    gcloud artifacts repositories add-iam-policy-binding my-app-helm-repo \
+        --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+        --role=roles/artifactregistry.writer
 
-        gcloud artifacts repositories add-iam-policy-binding my-app-be-docker-repo \
-            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
-            --role=roles/artifactregistry.writer
+    gcloud artifacts repositories add-iam-policy-binding my-app-be-docker-repo \
+        --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+        --role=roles/artifactregistry.writer
 
-        gcloud artifacts repositories add-iam-policy-binding my-app-fe-docker-repo \
-            --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
-            --role=roles/artifactregistry.writer
+    gcloud artifacts repositories add-iam-policy-binding my-app-fe-docker-repo \
+        --location=$MY_REGION --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+        --role=roles/artifactregistry.writer
      
 
+# DO THESE AFTER DEPLOYING WORKLOAD - Access secret manager
+    # Enable the Secret Manager APIs:
+    gcloud services enable secretmanager.googleapis.com
 
+    # if there is permission error then try Grant roles to your user account.
+        # gcloud projects add-iam-policy-binding $PROJECT_ID --member="<USER_IDENTIFIER>" --role=roles/secretmanager.admin
 
+    # Create a secret to store the sample data:
 
-# # create a custom security role to access cloud storage
+        # Upload secret file then -
+        gcloud secrets create $SECRET1_NAME \
+        --data-file=gg-secret.txt
+        # delete secret file 
 
-#     # role config - put it in a yaml file
-#     title: "orca_storage_editor_196"
-#     description: "orca_storage_editor_196"
-#     stage: "ALPHA"
-#     includedPermissions:
-#     - storage.buckets.get      
-#     - storage.objects.get
-#     - storage.objects.list
-#     - storage.objects.update
-#     - storage.objects.create
+    # Grant the kubernetes service account read-only access to the secret
+    gcloud secrets add-iam-policy-binding $SECRET1_NAME \
+    --member=principal://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$PROJECT_ID.svc.id.goog/subject/ns/$MY_NAMESPACE/sa/$BE_SERVICE_ACCOUNT \
+    --role='roles/secretmanager.secretAccessor' \
+    --condition=None
 
-#     gcloud iam roles create orca_storage_editor_196 --project qwiklabs-gcp-00-8051f9ee03bc --file role-definition.yaml
+    # Grant cloud storage access to k8s service account
+    gcloud storage buckets add-iam-policy-binding gs://$QUESTION_BUCKET \
+    --role=roles/storage.objectViewer \
+    --member=principal://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$PROJECT_ID.svc.id.goog/subject/ns/$MY_NAMESPACE/sa/$BE_SERVICE_ACCOUNT \
+    --condition=None
 
-# # Create service account to allow GKE to access cloud storage
-# gcloud iam service-accounts create orca-private-cluster-408-sa --display-name "my service account"
-# # Bind the custom security role to service account
-# gcloud projects add-iam-policy-binding qwiklabs-gcp-00-8051f9ee03bc --member serviceAccount:orca-private-cluster-408-sa@qwiklabs-gcp-00-8051f9ee03bc.iam.gserviceaccount.com --role projects/qwiklabs-gcp-00-8051f9ee03bc/roles/orca_storage_editor_196
+    # Optional to give write access to secret
+        # gcloud secrets add-iam-policy-binding bq-readonly-key \
+        # --member=principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/PROJECT_ID.svc.id.goog/subject/ns/admin-ns/sa/admin-sa \
+        # --role='roles/secretmanager.secretVersionAdder' \
+        # --condition=None
 
