@@ -3,6 +3,7 @@ apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
   name: my-app-backendconfig-be
+  namespace: {{ .Values.namespace }}
 spec:
   {{- if .Values.backendConfig.applyArmor }}
   securityPolicy:

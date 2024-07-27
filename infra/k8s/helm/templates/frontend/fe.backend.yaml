@@ -3,6 +3,7 @@ apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
   name: my-app-backendconfig-fe
+  namespace: {{ .Values.namespace }}
 spec:
   cdn:  
     enabled: true

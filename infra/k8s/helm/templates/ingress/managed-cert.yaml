@@ -1,12 +1,11 @@
 # https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
 {{- if .Values.ssl.create }}
-{{- with .Values.ssl }}
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: {{ .name }}
+  name: {{ .Values.ssl.name }}
+  namespace: {{ .Values.namespace }}
 spec:
   domains:
-    {{- toYaml .domains | nindent 4 }}
-{{- end }}
+    {{- toYaml .Values.ssl.domains | nindent 4 }}
 {{- end }}

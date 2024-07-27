@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.feService.name }}
+  namespace: {{ .Values.namespace }}
   labels:
     service: my-app-fe-service
   {{- with .Values.feService.annotations }}

@@ -43,7 +43,7 @@ steps:
 
 substitutions:
   _LOCATION: us-central1 
-  _VERSION: 0.2.0 
+  _VERSION: 0.4.0 
 # Store images in Google Artifact Registry 
 images:
   - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}

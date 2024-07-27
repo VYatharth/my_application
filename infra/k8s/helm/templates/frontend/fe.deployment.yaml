@@ -4,6 +4,7 @@ metadata:
   name: my-app-fe-deployment
   labels:
     name: my-app-fe
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.feDeployment.replicas }}
   selector:

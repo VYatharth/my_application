@@ -46,6 +46,6 @@ def update(
 )
 def delete(
     id: int, userService: UserService = Depends()
-):
+) -> str:
     userService.delete(id)
     return "user deleted successfully"

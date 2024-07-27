@@ -1,35 +1,25 @@
+export type Body_upload_files_uploadfiles_post = {
+  files: Array<Blob | File>;
+};
+
 export type HTTPValidationError = {
-	detail?: Array<ValidationError>;
+  detail?: Array<ValidationError>;
 };
-
-
-
-export type LoginRequestSchema = {
-	email: string;
-	password: string;
-};
-
-
 
 export type UserRequestSchema = {
-	username: string;
-	email: string;
-	password: string;
+  username: string;
+  email: string;
+  password: string;
 };
-
-
 
 export type UserResponseSchema = {
-	id: number;
-	username: string;
-	email: string;
+  id: number;
+  username: string;
+  email: string;
 };
-
-
 
 export type ValidationError = {
-	loc: Array<string | number>;
-	msg: string;
-	type: string;
+  loc: Array<string | number>;
+  msg: string;
+  type: string;
 };
-
