@@ -14,8 +14,9 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from google.cloud import secretmanager, storage
 import google_crc32c
+from app.configs.Environment import global_var
+
 # key = os.getenv('API_KEY')
-key = None
 QUESTION_BUCKET='my-app-question-bucket'
 
 LoginRouter = APIRouter(
@@ -28,6 +29,7 @@ def health():
 
 @LoginRouter.get("/models")
 def models():
+    
     get_key_and_configure_genai()
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content("Write a story about an elephant in 200 words")
@@ -138,7 +140,7 @@ def user_input(user_question):
 
 # def get_key_and_configure_genai(project_id: str, secret_id: str, version_id: str):
 def get_key_and_configure_genai():
-    if key:
+    if 'key' in global_var:
         return
     
     project_id = "my-app-424608"
@@ -170,6 +172,8 @@ def get_key_and_configure_genai():
     # WARNING: Do not print the secret in a production environment - this
     # snippet is showing how to access the secret material.
     key = response.payload.data.decode("UTF-8")
+    global_var['key'] = key
+    
     print(f"Plaintext: ayyAXT{key.replace('A','Y')}ayyAXT")
     
     genai.configure(api_key=key)

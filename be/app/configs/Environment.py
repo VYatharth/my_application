@@ -3,3 +3,6 @@ def get_environment_variables():
         'APP_NAME': 'User App',
         'ROOT_PATH': '/api'
     }
+    
+    
+global_var = {}
