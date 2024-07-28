@@ -85,7 +85,7 @@ def get_text_chunks(text):
 
 
 async def get_vector_store(text_chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001", google_api_key=key)
+    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001", google_api_key=global_var['key'])
     
     vector_store = await FAISS.afrom_texts(text_chunks, embedding=embeddings)
     # vector_store.save_local("faiss_index")
@@ -109,7 +109,7 @@ def get_conversational_chain():
     """
 
     model = ChatGoogleGenerativeAI(model="gemini-pro",
-                             temperature=0.3, google_api_key=key)
+                             temperature=0.3, google_api_key=global_var['key'])
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
@@ -118,7 +118,7 @@ def get_conversational_chain():
 
 
 def user_input(user_question):
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001",google_api_key=key)
+    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001",google_api_key=global_var['key'])
     
     # new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization = True)
     new_db = None
@@ -171,12 +171,9 @@ def get_key_and_configure_genai():
     #
     # WARNING: Do not print the secret in a production environment - this
     # snippet is showing how to access the secret material.
-    key = response.payload.data.decode("UTF-8")
-    global_var['key'] = key
+    global_var['key']  = response.payload.data.decode("UTF-8")
     
-    print(f"Plaintext: ayyAXT{key.replace('A','Y')}ayyAXT")
-    
-    genai.configure(api_key=key)
+    genai.configure(api_key=global_var['key'] )
     
 def upload_blob(bucket_name, source_file_name, destination_blob_name, content):
     """Uploads a file to the bucket."""
