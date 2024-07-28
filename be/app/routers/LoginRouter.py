@@ -12,9 +12,11 @@ from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
-
-key = os.getenv('API_KEY')
-genai.configure(api_key=key)
+from google.cloud import secretmanager, storage
+import google_crc32c
+# key = os.getenv('API_KEY')
+key = None
+QUESTION_BUCKET='my-app-question-bucket'
 
 LoginRouter = APIRouter(
   tags=['login']
@@ -26,30 +28,16 @@ def health():
 
 @LoginRouter.get("/models")
 def models():
+    get_key_and_configure_genai()
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content("Write a story about an elephant in 200 words")
     print(response.text)
     return  response.text
 
-# def main():
-
-#     user_question = st.text_input("Ask a Question from the PDF Files")
-
-#     if user_question:
-#         user_input(user_question)
-
-#     with st.sidebar:
-#         st.title("Menu:")
-#         pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
-#         if st.button("Submit & Process"):
-#             with st.spinner("Processing..."):
-#                 raw_text = get_pdf_text(pdf_docs)
-#                 text_chunks = get_text_chunks(raw_text)
-#                 get_vector_store(text_chunks)
-#                 st.success("Done")
 
 @LoginRouter.post("/uploadfiles")
 async def upload_files(files: list[UploadFile]) -> str:
+    get_key_and_configure_genai()
     contents =  []
     for file in files:
         print(file.filename)
@@ -65,6 +53,7 @@ async def upload_files(files: list[UploadFile]) -> str:
 
 @LoginRouter.get("/question", response_model=str)
 async def question(question: str) :
+    get_key_and_configure_genai()
     result = {'output_text': ''}
     if question:
         result = user_input(question) 
@@ -102,6 +91,8 @@ async def get_vector_store(text_chunks):
     with open('faiss_file', 'wb') as f:
         f.write(bytes)
     
+    upload_blob(QUESTION_BUCKET,'faiss_file','testy-file', None)
+    upload_blob(QUESTION_BUCKET,None,'testy-bytes',bytes)
 
 
 def get_conversational_chain():
@@ -129,8 +120,11 @@ def user_input(user_question):
     
     # new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization = True)
     new_db = None
-    with open('faiss_file',mode='rb') as myfile:
-        new_db = FAISS.deserialize_from_bytes(myfile.read(), embeddings, allow_dangerous_deserialization = True)
+    # with open('faiss_file',mode='rb') as myfile:
+    #     new_db = FAISS.deserialize_from_bytes(myfile.read(), embeddings, allow_dangerous_deserialization = True)
+    
+    faiss_data = download_blob_into_memory(QUESTION_BUCKET, 'testy-bytes')
+    new_db = FAISS.deserialize_from_bytes(faiss_data, embeddings, allow_dangerous_deserialization = True)
     
     docs = new_db.similarity_search(user_question)
 
@@ -141,3 +135,95 @@ def user_input(user_question):
         , return_only_outputs=True)
 
     return response
+
+# def get_key_and_configure_genai(project_id: str, secret_id: str, version_id: str):
+def get_key_and_configure_genai():
+    if key:
+        return
+    
+    project_id = "my-app-424608"
+
+    secret_id = "gg-secret"
+    version_id = "2"
+    """
+    Access the payload for the given secret version if one exists. The version
+    can be a version number as a string (e.g. "5") or an alias (e.g. "latest").
+    """
+
+    # Create the Secret Manager client.
+    client = secretmanager.SecretManagerServiceClient()
+
+    # Build the resource name of the secret version.
+    name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
+
+    # Access the secret version.
+    response = client.access_secret_version(request={"name": name})
+
+    # Verify payload checksum.
+    crc32c = google_crc32c.Checksum()
+    crc32c.update(response.payload.data)
+    if response.payload.data_crc32c != int(crc32c.hexdigest(), 16):
+        print("Data corruption detected.", response)
+
+    # Print the secret payload.
+    #
+    # WARNING: Do not print the secret in a production environment - this
+    # snippet is showing how to access the secret material.
+    key = response.payload.data.decode("UTF-8")
+    print(f"Plaintext: ayyAXT{key.replace('A','Y')}ayyAXT")
+    
+    genai.configure(api_key=key)
+    
+def upload_blob(bucket_name, source_file_name, destination_blob_name, content):
+    """Uploads a file to the bucket."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+    # The path to your file to upload
+    # source_file_name = "local/path/to/file"
+    # The ID of your GCS object
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    # Optional: set a generation-match precondition to avoid potential race conditions
+    # and data corruptions. The request to upload is aborted if the object's
+    # generation number does not match your precondition. For a destination
+    # object that does not yet exist, set the if_generation_match precondition to 0.
+    # If the destination object already exists in your bucket, set instead a
+    # generation-match precondition using its generation number.
+    generation_match_precondition = 0
+
+    # blob.upload_from_filename(source_file_name, if_generation_match=generation_match_precondition)
+    if source_file_name:
+        blob.upload_from_filename(source_file_name)
+    if content:
+        blob.upload_from_string(content)
+
+    print(
+        f"data uploaded to {destination_blob_name}."
+    )
+
+def download_blob_into_memory(bucket_name, blob_name):
+    """Downloads a blob into memory."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+
+    # The ID of your GCS object
+    # blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+
+    bucket = storage_client.bucket(bucket_name)
+
+    # Construct a client side representation of a blob.
+    # Note `Bucket.blob` differs from `Bucket.get_blob` as it doesn't retrieve
+    # any content from Google Cloud Storage. As we don't need additional data,
+    # using `Bucket.blob` is preferred here.
+    blob = bucket.blob(blob_name)
+    contents = blob.download_as_bytes()
+
+    print("Downloaded storage object successful ")
+    
+    return contents
