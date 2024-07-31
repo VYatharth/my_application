@@ -4,7 +4,7 @@ export MY_ZONE=us-central1-c
 export MY_CLUSTER=my-app-cluster
 export MY_NETWORK=my-app-network
 export SECRET1_NAME=gg-secret
-export QUESTION_BUCKET=question-bucket
+export QUESTION_BUCKET=my-app-question-bucket
 export MY_NAMESPACE=my-app-ns
 export BE_SERVICE_ACCOUNT=my-app-be-k8s-sa
 export PROJECT_ID=$(gcloud config get-value project)
@@ -213,20 +213,26 @@ gcloud compute addresses create my-app-public-ip --global
         # delete secret file 
 
     # Grant the kubernetes service account read-only access to the secret
+
     gcloud secrets add-iam-policy-binding $SECRET1_NAME \
     --member=principal://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$PROJECT_ID.svc.id.goog/subject/ns/$MY_NAMESPACE/sa/$BE_SERVICE_ACCOUNT \
     --role='roles/secretmanager.secretAccessor' \
     --condition=None
+    
+
+    # Optional to give write access to secret
+    # gcloud secrets add-iam-policy-binding bq-readonly-key \
+    # --member=principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/PROJECT_ID.svc.id.goog/subject/ns/admin-ns/sa/admin-sa \
+    # --role='roles/secretmanager.secretVersionAdder' \
+    # --condition=None
+
 
     # Grant cloud storage access to k8s service account
+    
     gcloud storage buckets add-iam-policy-binding gs://$QUESTION_BUCKET \
     --role=roles/storage.objectViewer \
     --member=principal://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$PROJECT_ID.svc.id.goog/subject/ns/$MY_NAMESPACE/sa/$BE_SERVICE_ACCOUNT \
     --condition=None
 
-    # Optional to give write access to secret
-        # gcloud secrets add-iam-policy-binding bq-readonly-key \
-        # --member=principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/PROJECT_ID.svc.id.goog/subject/ns/admin-ns/sa/admin-sa \
-        # --role='roles/secretmanager.secretVersionAdder' \
-        # --condition=None
+ 
 
