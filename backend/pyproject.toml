@@ -3,6 +3,7 @@ name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Admin <admin@example.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -26,6 +27,16 @@ sqlmodel = "^0.0.16"
 bcrypt = "4.0.1"
 pydantic-settings = "^2.2.1"
 sentry-sdk = {extras = ["fastapi"], version = "^1.40.6"}
+aiofiles = "^24.1.0"
+google-generativeai = "^0.7.2"
+langchain = "^0.2.16"
+langchain-community = "^0.2.16"
+pypdf2 = "^3.0.1"
+faiss-cpu = "^1.8.0.post1"
+langchain-google-genai = "^1.0.10"
+google-cloud-secret-manager = "^2.20.2"
+google-crc32c = "^1.6.0"
+google-cloud-storage = "^2.18.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
