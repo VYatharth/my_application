@@ -7,15 +7,18 @@
 
 ## Local Development
 
-* Start the stack with Docker Compose:
+* Install dependencies using poetry
 
 ```bash
-docker compose up -d
+poetry shell
+poetry install
 ```
 
-* Now you can open your browser and interact with these URLs:
-
-Frontend, built with Docker, with routes handled based on the path: http://localhost
+* Run backend using this command
+```bash
+poetry shell
+poetry install
+```
 
 Backend, JSON based web API based on OpenAPI: http://localhost/api/
 
