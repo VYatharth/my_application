@@ -1,17 +1,16 @@
-from typing import Any, Dict, List
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
+from typing import Annotated
+from fastapi import APIRouter, Depends
 
-from portfolio.common.models.portfolio_details import PortfolioDetails
+from portfolio.api.dependencies import get_portfolio_repository
+from portfolio.common.models.portfolio_dto import PortfolioDto
+from portfolio.domain.repository_interfaces.portfolio_repository import PortfolioRepository
+from portfolio.domain.usecases.read_portfolio_use_case import (
+  read_portfolio_use_case,
+  )
 
 
-router = APIRouter(
-  tags=['portfolio']
-)
+router = APIRouter()
 
-@router.get("/portfolio")
-def portfolio() -> PortfolioDetails:
-    get_key_and_configure_genai()
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content("Write a story about an elephant in 200 words")
-    print(response.text)
-    return  response.text
+@router.get("/")
+def portfolio(portfolio_repository: Annotated[PortfolioRepository, Depends(get_portfolio_repository)]) -> PortfolioDto:
+    return  read_portfolio_use_case(portfolio_repository)
