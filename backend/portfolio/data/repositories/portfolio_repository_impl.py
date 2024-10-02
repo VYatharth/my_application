@@ -11,6 +11,5 @@ class PortfolioRepositoryImpl(PortfolioRepository):
         # use Pydantic model and parse json into it
         with open(f"{root_path}/portfolio/data/resources/portfolio-data.json", 'r') as json_file:
             data = json_file.read()
-            print(data)
             portfolio = PortfolioDto.model_validate(pydantic_core.from_json(data, allow_partial=True))
             return portfolio

@@ -4,12 +4,10 @@ from portfolio.common.configs.settings import settings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
 class GenaiRepositoryImpl(GenaiRepository):
     def configure_genai(self, key: str):        
@@ -32,7 +30,7 @@ class GenaiRepositoryImpl(GenaiRepository):
         bytes = vector_store.serialize_to_bytes()
         return bytes
     
-    def query_document(self, user_question: str, genai_key: str, serialized_vector_store: any) -> any:
+    def query_document(self, user_question: str, genai_key: str, serialized_vector_store: any) -> str:
         # TODO: Make it work per user
         
         embeddings = GoogleGenerativeAIEmbeddings(model = settings.EMBEDDING_MODEL,google_api_key=genai_key)
@@ -44,14 +42,12 @@ class GenaiRepositoryImpl(GenaiRepository):
         chain = self.get_conversational_chain(genai_key)
         
         response = chain.invoke(
-            {"input_documents":docs, "question": user_question}
-            , return_only_outputs=True)
-
+            {"question": user_question, "context": docs})
+        
         return response
     
     
     def get_conversational_chain(self, genai_key: str) -> any:
-
         prompt_template = """
         Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
         provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
@@ -65,8 +61,7 @@ class GenaiRepositoryImpl(GenaiRepository):
                                 temperature=0.3, google_api_key=genai_key)
 
         prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
-        chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
-
+        chain = create_stuff_documents_chain(model, prompt)
         return chain
         
     
