@@ -25,7 +25,7 @@ psycopg = {extras = ["binary"], version = "^3.1.13"}
 sqlmodel = "^0.0.16"
 # Pin bcrypt until passlib supports the latest
 bcrypt = "4.0.1"
-pydantic-settings = "^2.2.1"
+pydantic-settings = "^2.5.2"
 sentry-sdk = {extras = ["fastapi"], version = "^1.40.6"}
 aiofiles = "^24.1.0"
 google-generativeai = "^0.7.2"
