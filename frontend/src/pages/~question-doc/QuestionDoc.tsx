@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import { ApiError, LoginService, TDataQuestionQuestionGet, TDataUploadFilesUploadfilesPost } from '../../client';
 import PrimarySemiRoundedButton from '../../components/Buttons/PrimarySemiRoundedButton';
+import { QuestionService } from './question.service';
+import { UploadFilesRequest } from '../../models';
 
 const QuestionDoc = () => {
   const queryClient = useQueryClient();
@@ -11,29 +12,17 @@ const QuestionDoc = () => {
     setSelectedFiles([...((e?.target?.files as never) ?? [])]);
   };
 
-  const handleUpload = async (): Promise<string | undefined> => {
-    if (selectedFiles.length === 0) {
-      alert('Please select files first');
-      return;
-    }
-    const formData = new FormData();
-    selectedFiles.forEach((file) => {
-      formData.append('files', file);
-    });
-    // Replace this URL with your server-side endpoint for handling file uploads
-    // const response = await fetch('https://your-upload-endpoint.com/upload', {
-    //   method: 'POST',
-    //   body: formData,
-    // });
-    mutation.mutate({ formData: { files: selectedFiles } });
-  };
+ 
   const mutation = useMutation({
-    mutationFn: (data: TDataUploadFilesUploadfilesPost) => LoginService.uploadFilesUploadfilesPost(data),
+    mutationFn: async (data: UploadFilesRequest) => {
+      const response = await QuestionService.Uploadfiles(data);
+      return response
+    },
     onSuccess: (responseData: string) => {
       console.log(responseData);
       alert('File uploaded successfully');
     },
-    onError: (err: ApiError) => {
+    onError: (err: any) => {
       const errDetail = (err.body as any)?.detail;
       alert('Something went wrong.');
       console.error(`${errDetail}`);
@@ -51,7 +40,40 @@ const QuestionDoc = () => {
 
     const response = await queryClient.fetchQuery({
       queryKey: ['question'],
-      queryFn: () => LoginService.questionQuestionGet(requestData),
+      queryFn: async () => {
+        return await QuestionService.getQuestionResponse(requestData);
+      },
+      staleTime: 0,
+    });
+
+    setResponse(response);
+  };
+
+  const handleUpload = () => {
+    if (selectedFiles.length === 0) {
+      alert('Please select files first');
+      return;
+    }
+    const formData = new FormData();
+    selectedFiles.forEach((file) => {
+      formData.append('files', file);
+    });
+    // Replace this URL with your server-side endpoint for handling file uploads
+    // const response = await fetch('https://your-upload-endpoint.com/upload', {
+    //   method: 'POST',
+    //   body: formData,
+    // });
+    mutation.mutate({ formData: { upload_files: selectedFiles } });
+  };
+
+  const handleGetArticle = async () => {
+   
+    const response = await queryClient.fetchQuery({
+      queryKey: ['question'],
+      queryFn: async () => {
+        const data = await QuestionService.getArticle();
+        return data;
+      },
       staleTime: 0,
     });
 
@@ -93,6 +115,9 @@ const QuestionDoc = () => {
       <br />
       <br />
       <div>{response}</div>
+      <br />
+      <br />
+      <PrimarySemiRoundedButton label='Model' action={handleGetArticle}></PrimarySemiRoundedButton>
     </div>
   );
 };
