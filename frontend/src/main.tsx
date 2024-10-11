@@ -4,13 +4,7 @@ import ReactDOM from "react-dom/client"
 import { routeTree } from "./routeTree.gen"
 
 import { StrictMode } from "react"
-import { OpenAPI } from "./client"
 import './index.css';
-
-OpenAPI.BASE = import.meta.env.VITE_API_URL
-OpenAPI.TOKEN = async () => {
-  return localStorage.getItem("access_token") || ""
-}
 
 const queryClient = new QueryClient()
 
