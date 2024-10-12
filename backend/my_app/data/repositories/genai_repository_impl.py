@@ -5,7 +5,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -23,10 +22,10 @@ class GenaiRepositoryImpl(GenaiRepository):
         chunks = text_splitter.split_text(text)
         return chunks
     
-    async def get_serialized_vector_store(self, text_chunks, key: str) -> any:
+    def get_serialized_vector_store(self, text_chunks, key: str) -> any:
         embeddings = GoogleGenerativeAIEmbeddings(model = settings.EMBEDDING_MODEL, google_api_key=key)
         
-        vector_store = await FAISS.afrom_texts(text_chunks, embedding=embeddings)
+        vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
         bytes = vector_store.serialize_to_bytes()
         return bytes
     
