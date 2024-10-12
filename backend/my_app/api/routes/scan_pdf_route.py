@@ -13,34 +13,22 @@ router = APIRouter()
 
 
 @router.get("/models")
-def models(genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)]):
+def models(genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)]) -> str:
     content = generate_content_use_case(genai_repository, "Write a story about a tiger in 200 words")
     return  content
     
   
 @router.post("/uploadfiles")
-async def upload_files(upload_files: list[UploadFile], request: Request, genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)], storage_repository: Annotated[StorageRepository, Depends(get_storage_repository)], file_repository: Annotated[FileRepository, Depends(get_file_repository)]) -> str:
+def upload_files(upload_files: list[UploadFile], request: Request, genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)], storage_repository: Annotated[StorageRepository, Depends(get_storage_repository)], file_repository: Annotated[FileRepository, Depends(get_file_repository)]) -> str:
     if upload_files:
         try:
-            await process_file_use_case(genai_repository, file_repository, storage_repository, upload_files[0].file, request.app.state.genai_key)
+            process_file_use_case(genai_repository, file_repository, storage_repository, upload_files[0].file, request.app.state.genai_key)
         except:
             raise HTTPException(status_code=500, detail="Error in parsing file")
     else:
         return 'No file'
     return  'file parsed and uploaded successfully'
 
-
-@router.get("/question", response_model=str)
-async def question(question: str, request: Request, genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)], storage_repository: Annotated[StorageRepository, Depends(get_storage_repository)]) -> str :
-    if question:
-        try:
-            result = await query_document_use_case(genai_repository, storage_repository, question, request.app.state.genai_key) 
-        
-            return result
-        except:
-            raise HTTPException(status_code=500, detail="Error in querying document")
-    
-    return 'Empty question'
         
     
 
