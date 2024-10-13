@@ -13,7 +13,6 @@ const QueryText = () => {
       return response;
     },
     onSuccess: (responseData: string) => {
-      console.log(responseData);
       alert(responseData);
     },
     onError: (err: any) => {

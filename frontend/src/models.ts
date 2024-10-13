@@ -16,6 +16,14 @@ export interface UploadFilesRequest {
   formData: UploadFilesBody;
 }
 
+export interface QueryTextRequest {
+  text_content: string;
+}
+
+export interface QueryRequest {
+  query: string;
+}
+
 export interface QuestionRequestData {
   question: string;
 }
