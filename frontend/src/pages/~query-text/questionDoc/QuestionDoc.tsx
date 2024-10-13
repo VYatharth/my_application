@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import PrimarySemiRoundedButton from '../../components/Buttons/PrimarySemiRoundedButton';
+import PrimarySemiRoundedButton from '../../../components/Buttons/PrimarySemiRoundedButton';
 import { QuestionService } from './question.service';
-import { UploadFilesRequest } from '../../models';
+import { UploadFilesRequest } from '../../../models';
 
 const QuestionDoc = () => {
   const queryClient = useQueryClient();
@@ -12,11 +12,10 @@ const QuestionDoc = () => {
     setSelectedFiles([...((e?.target?.files as never) ?? [])]);
   };
 
- 
   const mutation = useMutation({
     mutationFn: async (data: UploadFilesRequest) => {
       const response = await QuestionService.Uploadfiles(data);
-      return response
+      return response;
     },
     onSuccess: (responseData: string) => {
       console.log(responseData);
@@ -28,7 +27,7 @@ const QuestionDoc = () => {
       console.error(`${errDetail}`);
     },
   });
-
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -67,7 +66,6 @@ const QuestionDoc = () => {
   };
 
   const handleGetArticle = async () => {
-   
     const response = await queryClient.fetchQuery({
       queryKey: ['question'],
       queryFn: async () => {

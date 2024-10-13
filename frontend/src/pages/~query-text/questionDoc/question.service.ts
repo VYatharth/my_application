@@ -1,5 +1,5 @@
-import { QuestionRequestData, UploadFilesRequest } from '../../models';
-import { apiClient, getFormData } from '../../utils/apiUtil';
+import { QuestionRequestData, UploadFilesRequest } from '../../../models';
+import { apiClient, getFormData } from '../../../utils/apiUtil';
 
 export class QuestionService {
   public static async getArticle(): Promise<string> {
