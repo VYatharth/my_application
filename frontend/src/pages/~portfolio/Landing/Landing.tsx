@@ -1,4 +1,4 @@
-import AuthorImage from "../../../assets/images/blog-author.jpg"
+import AuthorImage from "../../../assets/images/yat.jpg"
 import { BiLogoFacebookSquare, BiLogoTwitter, BiLogoInstagram, BiLogoLinkedinSquare, BiChevronRight } from "react-icons/bi";
 const Landing = () => {
 
@@ -16,7 +16,7 @@ const Landing = () => {
                     <div className="items-center flex flex-wrap">
                         <div className="w-full lg:w-10/12 px-4 ml-auto mr-auto text-center">
                             <div
-                                className="container relative z-30  pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48"
+                                className="container relative z-30  pb-12 sm:pt-44 sm:pb-48 lg:pt-54 lg:pb-48"
                             >
                                 <div className="flex flex-col items-center justify-center lg:flex-row">
                                     <div className="rounded-full border-8 border-white shadow-xl">
