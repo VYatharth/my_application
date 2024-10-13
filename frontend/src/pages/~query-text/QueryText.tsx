@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import PrimarySemiRoundedButton from '../../components/Buttons/PrimarySemiRoundedButton';
 import { QueryTextRequest } from '../../models';
 import { QueryTextService } from './queryText.service';
 
@@ -23,7 +22,6 @@ const QueryText = () => {
       console.error(`${errDetail}`);
     },
   });
-
 
   const handleQuery = async (e: FormEvent<HTMLFormElement>) => {
     // Prevent the browser from reloading the page
@@ -69,59 +67,105 @@ const QueryText = () => {
   };
 
   return (
-    <div>
-      <div>
-        <form method='post' onSubmit={handleTextProcessSubmit}>
-          <label>
-            Enter your test to query from:
-            <textarea name='textContent' rows={4} cols={40} />
-          </label>
-          <hr />
-          <PrimarySemiRoundedButton key='text-process' label='Reset' type='reset'></PrimarySemiRoundedButton>
+    <section className='relative block py-24 bg-gray-900'>
+      <div className='container mx-auto px-4'>
+        <div className='flex flex-wrap justify-center'>
+          <div className='w-full lg:w-6/12 px-4'>
+            <div className='relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300'>
+              <div className='flex-auto p-5 lg:p-10'>
+                <h4 className='text-2xl font-semibold'>Utility to quickly scan a text and get your answers</h4>
+                <p className='leading-relaxed mt-1 mb-4 text-gray-600'>This is a test utility for demo purpose only.</p>
+                <form method='post' onSubmit={handleTextProcessSubmit}>
+                  <div className='relative w-full mb-3 mt-8'>
+                    <label className='block uppercase text-gray-700 text-xs font-bold mb-2' htmlFor='text'>
+                      Text
+                    </label>
+                    <textarea
+                      rows={4}
+                      cols={80}
+                      name='textContent'
+                      className='border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full'
+                      placeholder='Enter the text to scan...'
+                    />
+                  </div>
 
-          <button
-            className='bg-primary border-primary border rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-[#1B44C8] hover:border-[#1B44C8] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8]'
-            type='submit'
-          >
-            Process
-          </button>
-        </form>
-      </div>
+                  <div className='relative w-full mb-3'>
+                    <label className='block uppercase text-gray-700 text-xs font-bold mb-2' htmlFor='email'>
+                      Email
+                    </label>
+                    <input
+                      type='email'
+                      className='border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full'
+                      placeholder='Email'
+                      style={{ transition: 'all .15s ease' }}
+                    />
+                  </div>
 
-      <hr></hr>
-      <hr></hr>
-      <br />
-      <br />
-      <div>
-        <form method='post' onSubmit={handleQuery}>
-          <label>
-            Enter your question:
-            <textarea name='question' defaultValue='I really enjoyed biking yesterday!' rows={4} cols={40} />
-          </label>
-          <hr />
-          <button
-            type='reset'
-            className='bg-primary border-primary border rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-[#1B44C8] hover:border-[#1B44C8] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8]'
-          >
-            Reset edits
-          </button>
-          <button
-            className='bg-primary border-primary border rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-[#1B44C8] hover:border-[#1B44C8] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8]'
-            type='submit'
-          >
-            Save post
-          </button>
-        </form>
+                  <div className='text-center mt-6'>
+                    <button
+                      className='bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1'
+                      type='submit'
+                      style={{ transition: 'all .15s ease' }}
+                    >
+                      Process
+                    </button>
+                  </div>
+                </form>
+
+                <form method='post' onSubmit={handleQuery}>
+                  <div className='relative w-full mb-3'>
+                    <label className='block uppercase text-gray-700 text-xs font-bold mb-2' htmlFor='query'>
+                      Query
+                    </label>
+                    <input
+                      type='text'
+                      name='question'
+                      className='border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full'
+                      placeholder='Enter you query for the text entered above...'
+                      style={{ transition: 'all .15s ease' }}
+                    />
+                  </div>
+                  <div className='text-center mt-6'>
+                    <button
+                      className='bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1'
+                      type='submit'
+                      style={{ transition: 'all .15s ease' }}
+                    >
+                      Get Answer
+                    </button>
+                  </div>
+                </form>
+
+                <div className='relative w-full mb-3'>
+                  <label className='block uppercase text-gray-700 text-xs font-bold mb-2' htmlFor='result'>
+                    Result
+                  </label>
+                  <textarea
+                    rows={8}
+                    cols={80}
+                    className='border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow w-full'
+                    placeholder='Query result will be displayed here.'
+                    readOnly
+                    value={response}
+                  />
+                </div>
+
+                <div className='text-center mt-6 hidden'>
+                  <button
+                    className='bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1'
+                    type='submit'
+                    style={{ transition: 'all .15s ease' }}
+                    onClick={handleGetArticle}
+                  >
+                    Get data from prompt
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <hr></hr>
-      <hr></hr>
-      <br />
-      <br />
-      <div>{response}</div>
-      <br />
-      <br />
-      <PrimarySemiRoundedButton key='model' label='Model' type='button' action={handleGetArticle}></PrimarySemiRoundedButton>
-    </div>
+    </section>
   );
 };
 
