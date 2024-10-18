@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 
 from my_app.domain.repository_interfaces.file_repository import FileRepository
 from my_app.domain.repository_interfaces.storage_repository import StorageRepository
-from my_app.domain.usecases.genai_use_cases import generate_content_use_case, process_file_use_case, query_document_use_case
+from my_app.domain.usecases.genai_use_cases import generate_content_use_case, process_file_use_case
 from my_app.domain.repository_interfaces.genai_repository import GenaiRepository
 from my_app.api.dependencies import get_file_repository, get_genai_repository, get_storage_repository
 from fastapi import APIRouter, UploadFile

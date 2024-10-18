@@ -1,9 +1,5 @@
 from fastapi import APIRouter
-
-# key = os.getenv('API_KEY')
-
 from fastapi import APIRouter
-
 
 router = APIRouter(
   tags=['login']
