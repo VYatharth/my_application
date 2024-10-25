@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
+import { IoIosWarning } from 'react-icons/io';
 import { QueryTextRequest } from '../../models';
 import { QueryTextService } from './queryText.service';
-
 const QueryText = () => {
   const queryClient = useQueryClient();
   const [response, setResponse] = useState('');
@@ -73,7 +73,12 @@ const QueryText = () => {
             <div className='relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300'>
               <div className='flex-auto p-5 lg:p-10'>
                 <h4 className='text-2xl font-semibold'>Utility to quickly scan a text and get your answers</h4>
-                <p className='leading-relaxed mt-1 mb-4 text-gray-600'>This is a test utility for demo purpose only.</p>
+                <div className='flex content-center items-center'>
+                  <IoIosWarning className='text-red-500 text-xl'></IoIosWarning>
+                  <p className='leading-9 self-center ml-1 text-gray-600'>
+                    Work in progress. For demo and testing purpose only.
+                  </p>
+                </div>
                 <form method='post' onSubmit={handleTextProcessSubmit}>
                   <div className='relative w-full mb-3 mt-8'>
                     <label className='block uppercase text-gray-700 text-xs font-bold mb-2' htmlFor='text'>
@@ -84,7 +89,7 @@ const QueryText = () => {
                       cols={80}
                       name='textContent'
                       className='border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full'
-                      placeholder='Enter the text to scan...'
+                      placeholder='Enter the text to scan and query from...'
                     />
                   </div>
 
