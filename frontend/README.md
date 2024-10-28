@@ -19,32 +19,8 @@ npm run dev
 
 Notice that this live server is not running inside Docker, it's for local development, and that is the recommended workflow. Once you are happy with your frontend, you can build the frontend Docker image and start it, to test it in a production-like environment. But building the image at every change will not be as productive as running the local development server with live reload.
 
-Check the file `package.json` to see other available options.
-
-
 ---
 
-
-
-## Generate Client (API services etc.)
-
-* Download the OpenAPI JSON file and copy it to a new file `openapi.json` at the root of the `frontend` directory or directly use the url in `generate-client` command in package.json.
-
-* To simplify the names in the generated frontend client code, modify the `openapi.json` file by running the following script:
-
-```bash
-node modify-openapi-operationids.js
-```
-
-* To generate the frontend client, run:
-
-```bash
-npm run generate-client
-```
-
-* Commit the changes.
-
-Notice that everytime the backend changes (changing the OpenAPI schema), you should follow these steps again to update the frontend client.
 
 ## Using a Remote API
 
@@ -58,17 +34,6 @@ Then, when you run the frontend, it will use that URL as the base URL for the AP
 
 **Note that we will have to set `VITE_API_URL` separately in the dockerfile**
 
-## Code Structure
-
-The frontend code is structured as follows:
-
-* `frontend/src` - The main frontend code.
-* `frontend/src/assets` - Static assets.
-* `frontend/src/client` - The generated OpenAPI client.
-* `frontend/src/components` -  The common components of the frontend.
-* `frontend/src/hooks` - Custom hooks.
-* `frontend/src/pages` - The different routes of the frontend along with their component hierarchy.
-* `theme.tsx` - The Chakra UI custom theme.
 
 
 
