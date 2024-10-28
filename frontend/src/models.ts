@@ -27,3 +27,10 @@ export interface QueryRequest {
 export interface QuestionRequestData {
   question: string;
 }
+
+export interface Achievement {
+  imageSrc: string;
+  title: string;
+  subtitle?: string;
+  link?: string;
+}
