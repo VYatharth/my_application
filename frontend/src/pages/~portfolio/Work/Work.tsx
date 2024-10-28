@@ -1,10 +1,10 @@
-import 'react-vertical-timeline-component/style.min.css';
 import WorkCard from "../../../components/WorkCard/WorkCard";
 import GitHubCalendar from 'react-github-calendar';
 import ChatBot from "../../../assets/images/cb.jpg";
 import ProblemSolving from "../../../assets/images/ps.jpg";
 import Blog from "../../../assets/images/b4.png";
 
+// github calendar documentation - https://grubersjoe.github.io/react-github-calendar/
 const Work = () => {
     const selectLastHalfYear = (contributions: any) => {
         const currentYear = new Date().getFullYear();
@@ -24,7 +24,7 @@ const Work = () => {
     };
 
     return (
-        <section className="py-20 bg-slate-400 -mt-4">
+        <section className="py-20 bg-slate-400 -mt-4 border-b border-gray-900">
 
             <div className="container mx-auto px-4">
 
@@ -44,8 +44,8 @@ const Work = () => {
                         <WorkCard
                             title="Problem Solving"
                             subTitle="DSA"
-                            buttonText="Leetcode Profile"
-                            buttonHref="#"
+                            buttonText="View Leetcode Profile"
+                            buttonHref="https://leetcode.com/u/yatharthavarshneya/"
                         >
                             <img src={ProblemSolving} alt="portfolio" className="w-full" />
                         </WorkCard>
@@ -53,38 +53,40 @@ const Work = () => {
                         <WorkCard
                             title="Codes"
                             subTitle="Github Activity"
-                            buttonText="Github Profile"
-                            buttonHref="#"
+                            buttonText="View Github Profile"
+                            buttonHref="https://github.com/VYatharth"
                         >
                             <div className="flex flex-wrap justify-center rounded-[10px] p-4 w-full h-[300px]">
 
                                 <GitHubCalendar
-                                    username="grubersjoe"
+                                    username="VYatharth"
                                     transformData={selectLastHalfYear}
                                     hideColorLegend
                                     labels={{
-                                        totalCount: '{{count}} contributions in the last half year',
+                                        totalCount: '{{count}} contributions in the last 4 months',
                                     }}
                                 />
                             </div>
                         </WorkCard>
 
                         <WorkCard
-                            title="Chatbot"
-                            subTitle="AI & ML"
-                            buttonText="View Details"
-                            buttonHref="#"
-                        >
-                            <img src={ChatBot} alt="portfolio" className="w-full" />
-                        </WorkCard>
-                        <WorkCard
                             title="Writes"
                             subTitle="Blogging"
                             buttonText="View Blogs"
-                            buttonHref="/blogs"
+                            buttonHref="https://medium.com/@varshneya.yathartha"
                         >
                             <img src={Blog} alt="portfolio" className="w-full" />
                         </WorkCard>
+                        
+                        <WorkCard
+                            title="Explores"
+                            subTitle="AI & ML"
+                            buttonText="Query App"
+                            buttonHref="/query-text"
+                        >
+                            <img src={ChatBot} alt="portfolio" className="w-full" />
+                        </WorkCard>
+                        
                     </div>
 
                 </div>

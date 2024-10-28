@@ -7,7 +7,7 @@ import { portfolioData } from '../../../data/portfolioData';
 const Skills = () => {
   return (
     <>
-      <section className='pb-60 relative block bg-gray-900 border-b border-gray-300'>
+      <section className='pb-60 2xl:px-20 relative block bg-gray-900 border-b border-gray-300'>
         <div
           className='bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20'
           style={{ height: '80px' }}
@@ -21,7 +21,7 @@ const Skills = () => {
             x='0'
             y='0'
           >
-            <polygon className='text-gray-900 fill-current' points='2560 100 0 100 0 0'></polygon>
+            <polygon className='text-gray-900 fill-current' points='2560 100 0 110 0 0'></polygon>
           </svg>
         </div>
 
@@ -34,7 +34,7 @@ const Skills = () => {
         </div>
 
         <div className='items-center flex flex-wrap flex-row-reverse'>
-          <div className='w-10/12 md:w-4/12 ml-auto mr-auto'>
+          <div className='w-10/12 lg:w-6/12 lg:pr-12 ml-auto mr-auto'>
               <div className='text-gray-900 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg shadow-gray-900 rounded-full bg-gray-100'>
                 <BiSolidChip className='text-2xl'></BiSolidChip>
               </div>
@@ -60,7 +60,7 @@ const Skills = () => {
               </ul>
           </div>
 
-          <div className='w-10/12 md:w-4/12 pt-12 px-8 ml-auto mr-auto'>
+          <div className='w-10/12 lg:w-4/12 pt-12 px-8 ml-auto mr-auto'>
             <div className='max-w-full rounded-lg flex flex-wrap items-center justify-center gap-4'>
               <LayoutGroup>
                 {portfolioData?.technologiesUsed?.map((tech) => {
@@ -71,8 +71,8 @@ const Skills = () => {
           </div>
         </div>
 
-        <div className='flex flex-wrap items-center mt-32'>
-          <div className='w-10/12 md:w-4/12 mr-auto ml-auto'>
+        <div className='flex flex-wrap items-center mt-40'>
+          <div className='w-10/12 lg:w-6/12 lg:pl-12 mr-auto ml-auto'>
             <div className='text-gray-900 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-gray-100'>
               <FaTools className='text-xl'></FaTools>
             </div>
@@ -88,7 +88,7 @@ const Skills = () => {
             </p>
           </div>
 
-          <div className='w-10/12 md:w-4/12 pt-12 px-8 mr-auto ml-auto'>
+          <div className='w-10/12 lg:w-4/12 pt-12 px-8 mr-auto ml-auto'>
             <div className='max-w-full rounded-lg flex flex-wrap items-center justify-center gap-4'>
               <LayoutGroup>
                 {portfolioData?.toolsUsed?.map((tech) => {
@@ -113,7 +113,7 @@ const Skills = () => {
             x='0'
             y='0'
           >
-            <polygon className='text-gray-300 fill-current' points='2560 0 2560 100 0 100'></polygon>
+            <polygon className='text-gray-300 fill-current' points='2560 0 2560 110 0 100'></polygon>
           </svg>
         </div>
       </section>
