@@ -16,22 +16,13 @@ poetry install
 
 * Run backend using this command
 ```bash
-poetry shell
-poetry install
+uvicorn my_app.main:app --reload
 ```
 
-Backend, JSON based web API based on OpenAPI: http://localhost/api/
-
-Automatic interactive documentation with Swagger UI (from the OpenAPI backend): http://localhost/docs
-
-Adminer, database web administration: http://localhost:8080
+Backend, JSON based web API based on OpenAPI: http://127.0.0.1:8000/
 
 Traefik UI, to see how the routes are being handled by the proxy: http://localhost:8090
 
-**Note**: The first time you start your stack, it might take a minute for it to be ready. While the backend waits for the database to be ready and configures everything. You can check the logs to monitor it.
-
-
-If your Docker is not running in `localhost` (the URLs above wouldn't work) you would need to use the IP or domain where your Docker is running.
 
 ## Backend local development, additional details
 
