@@ -34,3 +34,15 @@ export interface Achievement {
   subtitle?: string;
   link?: string;
 }
+
+export interface Achievement {
+  imageSrc: string;
+  title: string;
+  subtitle?: string;
+  link?: string;
+}
+
+export enum  ColorMode {
+  light,
+  dark
+}
