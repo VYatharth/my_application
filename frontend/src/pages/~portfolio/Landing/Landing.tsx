@@ -1,6 +1,9 @@
 import { BiChevronRight } from 'react-icons/bi';
 import AuthorImage from '../../../assets/images/yat2.jpg';
+import DownloadResume from '../../../components/DownloadResume/DownloadResume';
 import { portfolioData } from '../../../data/portfolioData';
+
+
 const Landing = () => {
   return (
     <>
@@ -23,7 +26,7 @@ const Landing = () => {
                   </div>
                   <div className='pt-8 sm:pt-10 lg:pl-8 lg:pt-0'>
                     <h1 className='text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl'>
-                      Hello I am Yathartha Varshneya!
+                      Hello I'm Yathartha Varshneya!
                     </h1>
                     <div className='flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start'>
                       <div className='flex items-center justify-center pl-0 sm:justify-start md:pl-1'>
@@ -37,7 +40,7 @@ const Landing = () => {
                           return (
                             <a
                               href={profile.link}
-                              className={`${i ? 'pl-4' : ''} text-2xl text-white hover:text-yellow-600`}
+                              className={`${i ? 'ml-4' : ''} text-2xl text-white hover:text-gray-400`}
                               target='_blank'
                               rel='noopener noreferrer'
                             >
@@ -45,7 +48,7 @@ const Landing = () => {
                             </a>
                           );
                         })}
-                       
+                        <DownloadResume additionalClasses='ml-4'></DownloadResume>
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,8 @@
 import AnimatedCard from '../../../components/AnimatedCard/AnimatedCard';
 import BulletEllipse from '../../../components/BulletEllipse/BulletEllipse';
+import DownloadResume from '../../../components/DownloadResume/DownloadResume';
 import { portfolioData } from '../../../data/portfolioData';
-
+import { ColorMode } from '../../../models';
 const About = () => {
   return (
     <section className='relative py-20 bg-gray-100 pb-44 border-b border-gray-900'>
@@ -46,18 +47,22 @@ const About = () => {
             <div className='md:pr-12 px-4'>
               <h3 className='text-3xl font-semibold'>WHO AM I?</h3>
               <p className='mt-4 text-lg leading-relaxed text-gray-600'>{portfolioData.description}</p>
-              <p className='mt-4 text-lg leading-relaxed text-gray-600'>Apart from coding, some other activities that I love to do!</p>
-              <ul className='list-none mt-6'>
-                <li className='py-2'>
+              <p className='mt-4 text-lg leading-relaxed text-gray-600'>
+                Apart from coding, some other activities that I love to do!
+              </p>
+              <ul className='list-none mt-2'>
+                <li className='py-1'>
                   <BulletEllipse text='Reading' textClasses='text-gray-600' />
                 </li>
-                <li className='py-2'>
+                <li className='py-1'>
                   <BulletEllipse text='Writing Tech Blogs' textClasses='text-gray-600' />
                 </li>
-                <li className='py-2'>
+                <li className='py-1'>
                   <BulletEllipse text='Playing Games' textClasses='text-gray-600' />
                 </li>
               </ul>
+
+              <DownloadResume additionalClasses='mt-4' mode={ColorMode.dark}></DownloadResume>
             </div>
           </div>
         </div>
