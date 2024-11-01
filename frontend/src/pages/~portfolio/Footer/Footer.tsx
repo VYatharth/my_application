@@ -1,3 +1,4 @@
+import DownloadResume from '../../../components/DownloadResume/DownloadResume';
 import { portfolioData } from '../../../data/portfolioData';
 
 const Footer = () => {
@@ -24,7 +25,12 @@ const Footer = () => {
         <div className='flex flex-wrap text-center justify-center'>
           <div className='w-full lg:w-6/12 px-4'>
             <h2 className='text-4xl font-semibold text-gray-100'>Let's Connect!</h2>
-            <p className='text-lg leading-relaxed mt-4 mb-4 text-gray-500'>Feel free to mail me at - <span className='font-bold text-gray-400'>varshneya.yathartha@gmail.com</span></p>
+            <p className='text-lg leading-relaxed mt-4 mb-4 text-gray-500'>
+              Feel free to mail me at - <span className='font-bold text-gray-400'>varshneya.yathartha@gmail.com</span>
+            </p>
+            
+            <DownloadResume additionalClasses='mr-2'></DownloadResume>
+            
           </div>
         </div>
         <div className='flex flex-row flex-wrap mt-4 justify-center'>
@@ -41,7 +47,6 @@ const Footer = () => {
                 </button>
               );
             })}
-           
           </div>
         </div>
       </div>
