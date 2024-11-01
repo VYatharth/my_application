@@ -1,3 +1,4 @@
+# FROM python:3.12-slim
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 
 WORKDIR /app/
@@ -17,12 +18,9 @@ RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; els
 
 ENV PYTHONPATH=/app
 
-COPY ./scripts/ /app/
+COPY ./my_app /app/my_app
 
-COPY ./alembic.ini /app/
+EXPOSE 8080
 
-COPY ./prestart.sh /app/
+CMD ["uvicorn", "my_app.main:app", "--host", "0.0.0.0", "--port", "8080"]
 
-COPY ./tests-start.sh /app/
-
-COPY ./app /app/app
