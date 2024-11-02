@@ -32,24 +32,20 @@ const Alert = ({ setAlertData, alertData }: AlertProps) => {
   };
 
   return (
-    <>
-      {alertData.alertText.length > 0 ? (
-        <div className='absolute px-4 pt-2 top-0 left-0 z-10 w-full'>
-          <div className={'text-white px-6 py-4 border-0 rounded relative mb-4 ' + bgColor}>
-            <span className='text-xl inline-block mr-5 align-middle'>
-              <FaBell />
-            </span>
-            <span className='inline-block align-middle mr-8'>{alertData.alertText}</span>
-            <button
-              className='absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none'
-              onClick={() => setAlertText('')}
-            >
-              <span>×</span>
-            </button>
-          </div>
-        </div>
-      ) : null}
-    </>
+    <div className={`sticky px-4 pt-2 top-0 z-10 w-full ${alertData.alertText.length === 0 ? 'invisible' : ''}`}>
+      <div className={'text-white px-6 py-4 border-0 rounded relative ' + bgColor}>
+        <span className='text-xl inline-block mr-5 align-middle'>
+          <FaBell />
+        </span>
+        <span className='inline-block align-middle mr-8'>{alertData.alertText}</span>
+        <button
+          className='absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none'
+          onClick={() => setAlertText('')}
+        >
+          <span>×</span>
+        </button>
+      </div>
+    </div>
   );
 };
 
