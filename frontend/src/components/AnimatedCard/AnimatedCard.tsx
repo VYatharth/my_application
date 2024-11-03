@@ -4,11 +4,12 @@ import BadgeCard from '../BadgeCard/BadgeCard';
 
 export interface AnimatedCardProps {
     index: number;
-    title?: string;
+    title: string;
+    description?: string;
     icon?: any;
 }
 
-const AnimatedCard = ({ index, title, icon }: AnimatedCardProps) => {
+const AnimatedCard = ({ index, title, icon, description }: AnimatedCardProps) => {
     return (
         <motion.div
             variants={staggerContainer()}
@@ -21,8 +22,8 @@ const AnimatedCard = ({ index, title, icon }: AnimatedCardProps) => {
                 variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
                 className="w-full p-[1px] rounded-[20px]">
                 <BadgeCard
-                    title="Fully Customizable"
-                    details="We dejoy working with discerning clients, people for whom qualuty, service, integrity & aesthetics."
+                    title={title}
+                    details={description}
                     icon={icon}
                 />
                 {/* <div

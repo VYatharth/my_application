@@ -1,13 +1,20 @@
+// Documentation - https://www.youtube.com/watch?v=RMTdoi_5sAA
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import AchievementCard from "../../../../components/AchievementCard/AchievementCard";
-import awsBadge from "../../../../assets/images/aws-badge.png";
-import gcpBadge from "../../../../assets/images/gcp-badge2.png";
+
 import { BiSolidChevronLeft, BiSolidChevronRight } from "react-icons/bi";
+import { Achievement } from "../../../../models";
 
-// Documentation - https://www.youtube.com/watch?v=RMTdoi_5sAA
 
-const AchievementSlider = () => {
+
+export interface AchievementSliderProps {
+    achievements: Achievement[];
+}
+
+const AchievementSlider = (props: AchievementSliderProps) => {
+    const {achievements} = props;
     const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
 
     const handleNext = () => {
@@ -29,14 +36,6 @@ const AchievementSlider = () => {
         });
     };
 
-    const images = [
-        "https://i.ibb.co/30tGtjP/image-04.jpg",
-        awsBadge,
-        gcpBadge,
-        "https://i.ibb.co/yVVT0Dp/image-02-2.jpg",
-        "https://i.ibb.co/8P6cvVy/image-01-1.jpg",
-
-    ];
 
     const positions = ["center", "left1", "left", "right", "right1"];
 
@@ -50,7 +49,7 @@ const AchievementSlider = () => {
     return (
         <div className="mt-32">
             <div className="flex items-center flex-col justify-center h-[200px]">
-                {images.map((image, index) => (
+                {achievements.map((achievement, index) => (
                     <motion.div
                         initial="center"
                         transition={{ duration: 0.5 }}
@@ -59,9 +58,10 @@ const AchievementSlider = () => {
                         key={index}
                         style={{ position: "absolute" }}>
                         <AchievementCard
-                            name="Coriss Ambady"
-                            profession="Web Developer"
-                            imageSrc={`${image}`}
+                            title={achievement.title}
+                            subtitle={achievement.subtitle ?? ''}
+                            link={achievement.link}
+                            imageSrc={`${achievement.imageSrc}`}
                         />
                     </motion.div>
 

@@ -3,7 +3,7 @@ steps:
   # build container images be
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}', './be']
+            '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}', './backend']
 
   #  # Docker push to Google Artifact Registry
   # - name: 'gcr.io/cloud-builders/docker'
@@ -43,7 +43,7 @@ steps:
 
 substitutions:
   _LOCATION: us-central1 
-  _VERSION: 0.7.0 
+  _VERSION: 0.8.0 
 # Store images in Google Artifact Registry 
 images:
   - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/my-app-be-docker-repo/my-app-be:${_VERSION}

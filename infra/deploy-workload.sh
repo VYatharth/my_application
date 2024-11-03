@@ -34,8 +34,9 @@
     helm upgrade --install --atomic my-app-release ./helm --values ./helm/values.yaml --dry-run
 
 #directly install without pulling
+
     # helm template myrelease oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.1.0
-    helm upgrade --install --atomic my-app-release oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.1.0 --dry-run
+    helm upgrade --install --atomic my-app-release oci://us-central1-docker.pkg.dev/my-app-424608/my-app-helm-repo/my-app --version 0.4.0 --dry-run
 
     
 
