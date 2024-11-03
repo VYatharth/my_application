@@ -30,8 +30,6 @@ class GenaiRepositoryImpl(GenaiRepository):
         return bytes
     
     def query_document(self, user_question: str, genai_key: str, serialized_vector_store: any) -> str:
-        # TODO: Make it work per user
-        
         embeddings = GoogleGenerativeAIEmbeddings(model = settings.EMBEDDING_MODEL,google_api_key=genai_key)
         
         vector_store = FAISS.deserialize_from_bytes(serialized_vector_store, embeddings, allow_dangerous_deserialization = True)
