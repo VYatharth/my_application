@@ -13,8 +13,13 @@ router = APIRouter()
 
 @router.get("/models")
 def models(genai_repository: Annotated[GenaiRepository, Depends(get_genai_repository)]) -> str:
-    content = generate_content_use_case(genai_repository, "Write a story about a tiger in 200 words")
-    return  content
+    try:
+        content = generate_content_use_case(genai_repository, "Write a story about a tiger in 200 words")
+        return  content
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=e)
+    
     
   
 @router.post("/processtext")
@@ -24,7 +29,7 @@ def upload_files(article_dto: QueryTextDto, request: Request, genai_repository: 
             process_text_use_case(article_dto.text_content, genai_repository, storage_repository, request.app.state.genai_key, article_dto.email)
         except Exception as e:
             print(e)
-            raise HTTPException(status_code=500, detail="Error in processing text")
+            raise HTTPException(status_code=500, detail=e)
     else:
         raise HTTPException(status_code=400, detail="Invalid input")
     return  article_dto.email
@@ -39,7 +44,7 @@ def query(query_dto: QueryDto, request: Request, genai_repository: Annotated[Gen
             return result
         except Exception as e:
             print(e)
-            raise HTTPException(status_code=500, detail="Error in querying document")
+            raise HTTPException(status_code=500, detail=e)
     
     return 'Empty question'
         
