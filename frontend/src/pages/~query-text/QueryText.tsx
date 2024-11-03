@@ -113,7 +113,7 @@ const QueryText = () => {
                   <div className='flex content-center items-center'>
                     <IoIosWarning className='text-red-500 text-xl'></IoIosWarning>
                     <p className='leading-9 self-center ml-1 text-gray-600'>
-                      Work in progress. For demo and testing purpose only.
+                      For demo and testing purpose only.
                     </p>
                   </div>
 

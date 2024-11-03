@@ -18,10 +18,12 @@ export interface UploadFilesRequest {
 
 export interface QueryTextRequest {
   text_content: string;
+  email: string;
 }
 
 export interface QueryRequest {
   query: string;
+  email: string;
 }
 
 export interface QuestionRequestData {
@@ -42,7 +44,19 @@ export interface Achievement {
   link?: string;
 }
 
+export interface AlertData {
+  type?: AlertType;
+  alertText: string;
+}
+
 export enum  ColorMode {
   light,
   dark
+}
+
+export enum  AlertType {
+  error,
+  warning,
+  success,
+  info
 }
