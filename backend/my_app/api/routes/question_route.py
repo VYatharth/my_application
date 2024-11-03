@@ -18,7 +18,7 @@ def models(genai_repository: Annotated[GenaiRepository, Depends(get_genai_reposi
         return  content
     except Exception as e:
         print(e)
-        raise HTTPException(status_code=500, detail=e)
+        raise HTTPException(status_code=500, detail=e.with_traceback())
     
     
   
