@@ -1,5 +1,6 @@
 import { BiChevronRight } from 'react-icons/bi';
 import AuthorImage from '../../../assets/images/yat2.jpg';
+import BackgroundImage from '../../../assets/images/bg-hero.jpg';
 import DownloadResume from '../../../components/DownloadResume/DownloadResume';
 import { portfolioData } from '../../../data/portfolioData';
 
@@ -11,7 +12,7 @@ const Landing = () => {
         <div
           className='absolute top-0 w-full h-full bg-center bg-cover'
           style={{
-            backgroundImage: "url('/src/assets/images/bg-hero.jpg')",
+            backgroundImage: `url(${BackgroundImage})`,
           }}
         >
           <span id='blackOverlay' className='w-full h-full absolute opacity-75 bg-black'></span>
