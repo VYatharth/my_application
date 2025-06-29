@@ -1,20 +1,8 @@
 {
-    "personalDetails": {
-
-    },
-    "skills": {
-
-    },
-    "achievements": {
-
-    },
-    "experience": {
-
-    },
-    "activities": {
-
-    },
-    "contactInfo": {
-
-    }
+  "personal_details": {},
+  "skills": {},
+  "achievements": {},
+  "experience": {},
+  "activities": {},
+  "contact_info": {}
 }
