@@ -37,11 +37,11 @@ def get_secret_manager_repository() -> SecretManagerRepository:
 
 def get_key_and_configure_genai(app: FastAPI):
     key = ''
-    if settings.ENVIRONMENT == "local":
+    if settings.READ_SECRET_FROM_ENV:
         key = os.getenv('API_KEY')
     else:
         key = get_secret(get_secret_manager_repository(), settings.SECRET_ID, settings.SECRET_VERSION)
     app.state.genai_key = key
-    configure_genai_use_case(get_genai_repository(), key)
+    configure_genai_use_case(get_genai_repository(), key or '')
     
     
