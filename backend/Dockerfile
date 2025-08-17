@@ -1,20 +1,15 @@
-# FROM python:3.12-slim
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM python:3.12-slim
+
+# install UV
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /app/
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
+# Copy uv.lock* in case it doesn't exist in the repo
+COPY ./pyproject.toml ./uv.lock* /app/
 
-# Copy poetry.lock* in case it doesn't exist in the repo
-COPY ./pyproject.toml ./poetry.lock* /app/
-
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=false
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --only main ; fi"
+# TODO: don't install dev dependencies
+RUN uv sync --frozen --no-cache
 
 ENV PYTHONPATH=/app
 
@@ -22,5 +17,6 @@ COPY ./my_app /app/my_app
 
 EXPOSE 8080
 
-CMD ["uvicorn", "my_app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["/app/.venv/bin/fastapi", "run", "my_app/main.py", "--host", "0.0.0.0", "--port", "8080"]
+# CMD ["uvicorn", "my_app.main:app", "--host", "0.0.0.0", "--port", "8080"]
 

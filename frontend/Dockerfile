@@ -9,7 +9,8 @@ RUN npm install
 
 COPY ./ /app/
 
-ENV VITE_API_URL=/api
+# ENV VITE_API_URL=/api 
+ENV VITE_API_URL=https://be.vyathartha.com/api
 
 RUN npm run build
 

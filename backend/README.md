@@ -7,16 +7,16 @@
 
 ## Local Development
 
-* Install dependencies using poetry
+* Install dependencies using UV
 
 ```bash
-poetry shell
-poetry install
+uv sync
 ```
 
 * Run backend using this command
 ```bash
-uvicorn my_app.main:app --reload
+# uvicorn my_app.main:app --reload
+uv run fastapi dev my_app/main.py
 ```
 
 Backend, JSON based web API based on OpenAPI: http://127.0.0.1:8000/
