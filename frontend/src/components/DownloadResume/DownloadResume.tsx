@@ -1,5 +1,5 @@
 import { MdDownloadForOffline } from 'react-icons/md';
-import Resume from '../../assets/files/resume.pdf';
+import Resume from '../../assets/files/Yathartha_Varshneya.pdf';
 import { ColorMode } from '../../models';
 
 const DownloadResume = (props: { additionalClasses?: string; mode?: ColorMode }) => {
