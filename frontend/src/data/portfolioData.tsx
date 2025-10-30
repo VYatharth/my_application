@@ -1,4 +1,13 @@
-import { BiLogo99Designs, BiLogoGithub, BiLogoGmail, BiLogoLinkedinSquare, BiLogoMedium, BiLogoPython, BiLogoReact, BiSolidCloud } from 'react-icons/bi';
+import {
+  BiLogo99Designs,
+  BiLogoGithub,
+  BiLogoGmail,
+  BiLogoLinkedinSquare,
+  BiLogoMedium,
+  BiLogoPython,
+  BiLogoReact,
+  BiSolidCloud,
+} from 'react-icons/bi';
 import PythonLogo from '../assets/images/python.png';
 import FastapiLogo from '../assets/images/fastapi.png';
 import AngularLogo from '../assets/images/angular.png';
@@ -6,22 +15,20 @@ import AwsLogo from '../assets/images/aws-logo.png';
 import ReactLogo from '../assets/images/react.png';
 import JsLogo from '../assets/images/javascript.png';
 import HtmlLogo from '../assets/images/html-logo.png';
-import NcLogo from '../assets/images/net-core.png';
 import DockerLogo from '../assets/images/docker-logo.png';
 import KubernetesLogo from '../assets/images/kubernetes.png';
 import GcpLogo from '../assets/images/gcp4.png';
 import KafkaLogo from '../assets/images/kafka.png';
 import MysqlLogo from '../assets/images/mysql.png';
 import EsLogo from '../assets/images/es.png';
-import KongLogo from '../assets/images/kong.png';
+import Zookeeper from '../assets/images/zookeeper1.png';
 import OktaLogo from '../assets/images/okta.png';
 import VscodeLogo from '../assets/images/vscode.png';
-import TbplusLogo from '../assets/images/tableplus.png';
+import Jaeger from '../assets/images/jaeger.png';
 import GithubLogo from '../assets/images/github.png';
 import PostmanLogo from '../assets/images/postman.png';
 import SonarqubeLogo from '../assets/images/sq.png';
 import JenkinsLogo from '../assets/images/jenkins.png';
-import JestLogo from '../assets/images/jest.png';
 import PrometheusLogo from '../assets/images/prometheus.png';
 import JiraLogo from '../assets/images/jira.png';
 import PoetryLogo from '../assets/images/poetry.png';
@@ -30,9 +37,12 @@ import gcpBadge from '../assets/images/gcp-certification.png';
 import nagarro from '../assets/images/nagarro.png';
 import db2 from '../assets/images/db2.png';
 import linux from '../assets/images/linux.png';
+import Mongo from '../assets/images/mongodb.png';
 
 export const portfolioData = {
-  description: `My name is Yathartha. I'm a full stack web developer based in India. During the day I work as a lead developer at a local agency and in the evening I utilize the time to built my own products. I spent my leisure hours writing articles. Right now I'm also trying a hand at machine learning and AI. I love to learn and explore new arenas.`,
+  description: `Senior Software Engineer specializing in architecting and developing large-scale distributed systems within fast-paced
+agile environments. Skilled in backend development using Python (FastAPI) and frontend development with React.
+Experienced in leading and mentoring teams. `,
   publicProfiles: [
     {
       link: 'https://www.linkedin.com/in/yathartha-varshneya-140192/',
@@ -50,68 +60,74 @@ export const portfolioData = {
       link: 'mailto:varshneya.yathartha@gmail.com',
       icon: <BiLogoGmail />,
     },
-   
   ],
   primarySkills: [
     {
-      skill: 'Large Scale Distributed System Design',
+      skill: 'Large Scale Distributed Systems',
       description:
-        'We dejoy working with discerning clients, people for whom qualuty, service, integrity & aesthetics.',
+        'Created and maintained large scale distributed systems with high availability and low latency requirements.',
       icon: <BiLogo99Designs className='text-2xl text-white' />,
     },
     {
-      skill: 'Python Developer',
-      description: '',
-      icon: <BiLogoPython className='text-2xl text-white' />,
-    },
-    {
       skill: 'Cloud Engineer (GCP and AWS)',
-      description: '',
+      description: 'Experienced in deploying and managing applications on GCP and AWS',
       icon: <BiSolidCloud className='text-2xl text-white' />,
     },
     {
+      skill: 'Python Developer',
+      description: 'Created multiple Python applications using FastAPI and Flask',
+      icon: <BiLogoPython className='text-2xl text-white' />,
+    },
+    {
       skill: 'React Developer',
-      description: '',
+      description: 'Experienced in developing web applications using ReactJS',
       icon: <BiLogoReact className='text-2xl text-white' />,
     },
   ],
   technologiesUsed: [
     { name: 'Python', experience: '', icon: <img src={PythonLogo} className='h-16 rounded-full' alt='Python' /> },
-    { name: 'FastAPI', experience: '', icon: <img src={FastapiLogo} className='h-10 rounded-full' alt='Python' /> },
-    { name: 'React', experience: '', icon: <img src={ReactLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Javascript', experience: '', icon: <img src={JsLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'HTML', experience: '', icon: <img src={HtmlLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Angular', experience: '', icon: <img src={AngularLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: '.NET Core', experience: '', icon: <img src={NcLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Docker', experience: '', icon: <img src={DockerLogo} className='h-8 rounded-full' alt='Python' /> },
+    { name: 'FastAPI', experience: '', icon: <img src={FastapiLogo} className='h-10 rounded-full' alt='FastAPI' /> },
+    { name: 'React', experience: '', icon: <img src={ReactLogo} className='h-8 rounded-full' alt='React' /> },
+    { name: 'Javascript', experience: '', icon: <img src={JsLogo} className='h-8 rounded-full' alt='Javascript' /> },
+    { name: 'MongoDB', experience: '', icon: <img src={Mongo} className='h-12 rounded-full' alt='MongoDB' /> },
+    { name: 'HTML', experience: '', icon: <img src={HtmlLogo} className='h-6 rounded-full' alt='HTML' /> },
+    { name: 'Docker', experience: '', icon: <img src={DockerLogo} className='h-8 rounded-full' alt='Docker' /> },
     {
       name: 'Kubernetes',
       experience: '',
-      icon: <img src={KubernetesLogo} className='h-12 rounded-full' alt='Python' />,
+      icon: <img src={KubernetesLogo} className='h-12 rounded-full' alt='Kubernetes' />,
     },
-    { name: 'AWS', experience: '', icon: <img src={AwsLogo} className='h-12 rounded-full' alt='Python' /> },
-    { name: 'GCP', experience: '', icon: <img src={GcpLogo} className='h-12 rounded-full' alt='Python' /> },
-    { name: 'Kafka', experience: '', icon: <img src={KafkaLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'MySQL', experience: '', icon: <img src={MysqlLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'ElasticSearch', experience: '', icon: <img src={EsLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Kong', experience: '', icon: <img src={KongLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Okta', experience: '', icon: <img src={OktaLogo} className='h-8 rounded-full' alt='Python' /> },
+    { name: 'AWS', experience: '', icon: <img src={AwsLogo} className='h-12 rounded-full' alt='AWS' /> },
+    { name: 'GCP', experience: '', icon: <img src={GcpLogo} className='h-12 rounded-full' alt='GCP' /> },
+    { name: 'Kafka', experience: '', icon: <img src={KafkaLogo} className='h-8 rounded-full' alt='Kafka' /> },
+    { name: 'MySQL', experience: '', icon: <img src={MysqlLogo} className='h-8 rounded-full' alt='MySQL' /> },
+    { name: 'Angular', experience: '', icon: <img src={AngularLogo} className='h-4 rounded-full' alt='Angular' /> },
+    {
+      name: 'ElasticSearch',
+      experience: '',
+      icon: <img src={EsLogo} className='h-8 rounded-full' alt='ElasticSearch' />,
+    },
+    { name: 'Zookeeper', experience: '', icon: <img src={Zookeeper} className='h-8 rounded-full' alt='Zookeeper' /> },
+    { name: 'Okta', experience: '', icon: <img src={OktaLogo} className='h-8 rounded-full' alt='Okta' /> },
   ],
   toolsUsed: [
-    { name: 'VSCode', experience: '', icon: <img src={VscodeLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'TablePlus', experience: '', icon: <img src={TbplusLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Github', experience: '', icon: <img src={GithubLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Postman', experience: '', icon: <img src={PostmanLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'SonarQube', experience: '', icon: <img src={SonarqubeLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Jenkins', experience: '', icon: <img src={JenkinsLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Jest', experience: '', icon: <img src={JestLogo} className='h-8 rounded-full' alt='Python' /> },
+    { name: 'VSCode', experience: '', icon: <img src={VscodeLogo} className='h-8 rounded-full' alt='VSCode' /> },
+    { name: 'Github', experience: '', icon: <img src={GithubLogo} className='h-8 rounded-full' alt='Github' /> },
+    { name: 'Postman', experience: '', icon: <img src={PostmanLogo} className='h-8 rounded-full' alt='Postman' /> },
+    {
+      name: 'SonarQube',
+      experience: '',
+      icon: <img src={SonarqubeLogo} className='h-8 rounded-full' alt='SonarQube' />,
+    },
+    { name: 'Jenkins', experience: '', icon: <img src={JenkinsLogo} className='h-8 rounded-full' alt='Jenkins' /> },
+    { name: 'Jaeger', experience: '', icon: <img src={Jaeger} className='h-8 rounded-full' alt='Jaeger' /> },
     {
       name: 'Prometheus',
       experience: '',
-      icon: <img src={PrometheusLogo} className='h-8 rounded-full' alt='Python' />,
+      icon: <img src={PrometheusLogo} className='h-8 rounded-full' alt='Prometheus' />,
     },
-    { name: 'Jira', experience: '', icon: <img src={JiraLogo} className='h-8 rounded-full' alt='Python' /> },
-    { name: 'Poetry', experience: '', icon: <img src={PoetryLogo} className='h-8 rounded-full' alt='Python' /> },
+    { name: 'Jira', experience: '', icon: <img src={JiraLogo} className='h-8 rounded-full' alt='Jira' /> },
+    { name: 'Poetry', experience: '', icon: <img src={PoetryLogo} className='h-8 rounded-full' alt='Poetry' /> },
   ],
   achievements: [
     {
@@ -134,7 +150,7 @@ export const portfolioData = {
     {
       title: 'Senior Software Engineer',
       companyName: 'Netskope',
-      description: `Working as an Senior Software Engineer which involves developing new features, making architectural design decisions, taking initiative and doing research(POC), code reviews, writing unit tests, and collaborating with product and testing teams. Mentoring and leading junior engineers`,
+      description: `Serve as a Senior Software Engineer, responsible for designing and developing new features, making key architectural decisions, driving technical initiatives and proof-of-concepts, conducting code reviews, writing unit tests, and collaborating closely with product and QA teams. Also mentor and lead junior engineers.`,
       date: 'AUG 2021 - Present',
       contentArrowStyle: { borderRight: '7px solid rgb(33, 150, 243)' },
       textClassName: 'shadow-lg text-gray-100 bg-sky-600 border-b-[3px] border-gray-500',
@@ -143,25 +159,26 @@ export const portfolioData = {
     {
       title: 'Staff Engineer',
       companyName: 'Nagarro',
-      description: `Worked as Team Lead in a team of 3 devs and 2 QA to deliver Organizational Diagnostic Tool.`,
+      description: `Led a team of 3 developers and 2 QA engineers, overseeing the end-to-end development and successful deployment of multiple applications to production.`,
       date: 'NOV 2018 - AUG 2021',
     },
     {
       title: 'Software Engineer',
       companyName: 'Metacube Softwares',
-      description: 'Worked as individual contributer on microservices architecture having containerized services using Docker and Kubernetes',
+      description:
+        'Contributed as a developer to the design and implementation of microservices architecture, building containerized services using Docker and Kubernetes.',
       date: 'NOV 2016 - OCT 2018',
     },
     {
       title: 'Software Engineer',
       companyName: 'Q3 Technologies',
-      description: 'Worked as individual contributer on multiple web applications in Angular and .NET',
+      description: 'Worked as individual contributer on multiple web applications in Python and Angular.',
       date: 'MAR 2015 - OCT 2016',
     },
     {
       title: 'Software Engineer',
       companyName: 'Softworld India Pvt. Ltd.',
-      description: 'Worked on flagship ERP product of the company in .NET MVC',
+      description: 'Worked on flagship ERP product of the company.',
       className: 'vertical-timeline-element--education',
       date: 'AUG 2014 - MAR 2015',
     },
