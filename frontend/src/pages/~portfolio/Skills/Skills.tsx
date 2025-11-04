@@ -45,11 +45,11 @@ const Skills = () => {
               </p>
               <ul className='list-none mt-6'>
                 <li className='py-2'>
-                  <BulletEllipse text='Python' textClasses='text-gray-500' bulletClasses='bg-white/[.5]' />
+                  <BulletEllipse text='Python, FastAPI' textClasses='text-gray-500' bulletClasses='bg-white/[.5]' />
                 </li>
                 <li className='py-2'>
                   <BulletEllipse
-                    text='GCP (GKE, Cloud SQL, PubSub, Load Balancer, Cloud storage)'
+                    text='GCP (GKE, Cloud SQL, PubSub, Load Balancer, Cloud storage), AWS'
                     textClasses='text-gray-500'
                     bulletClasses='bg-white/[.5]'
                   />
@@ -78,13 +78,11 @@ const Skills = () => {
             </div>
             <h3 className='text-3xl mb-2 font-semibold leading-normal text-white'>Tool I have used</h3>
             <p className='mt-4 text-lg leading-relaxed text-gray-500'>
-              In the left are the Technologies I have worked with in my whole career. Below are the ones that define my
-              current dominant skill set:
+              In the right are the tools I am proficient with.
             </p>
 
             <p className='text-lg leading-relaxed mt-0 mb-4 text-gray-500'>
-              The kit comes with three pre-built pages to help you get started faster. You can change the text and
-              images and you're good to go. Just make sure you enable them first via JavaScript.
+              
             </p>
           </div>
 
