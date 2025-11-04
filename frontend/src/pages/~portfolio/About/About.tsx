@@ -58,7 +58,7 @@ const About = () => {
                   <BulletEllipse text='Writing Tech Blogs' textClasses='text-gray-600' />
                 </li>
                 <li className='py-1'>
-                  <BulletEllipse text='Playing Games' textClasses='text-gray-600' />
+                  <BulletEllipse text='Exploring new tech' textClasses='text-gray-600' />
                 </li>
               </ul>
 
