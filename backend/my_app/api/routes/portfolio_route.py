@@ -9,8 +9,9 @@ from my_app.domain.usecases.read_portfolio_use_case import (
   )
 
 
-router = APIRouter()
+router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
 @router.get("/")
 def portfolio(portfolio_repository: Annotated[PortfolioRepository, Depends(get_portfolio_repository)]) -> PortfolioDto:
     return  read_portfolio_use_case(portfolio_repository)
+  
